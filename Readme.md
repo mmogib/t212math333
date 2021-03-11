@@ -4,5 +4,8 @@
 
 * Download 
 * ```bash docker-compose up -d ```
+* ``bash
+* docker exec -it t202-grades /bin/bash
+* ``
 * DONE
 
