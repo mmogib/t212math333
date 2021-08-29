@@ -223,19 +223,20 @@ In (Circular Helix)
 # ╔═╡ d1013f55-85ea-4e0b-9499-830511054374
 begin
 	fig9_5_2=load(download("https://www.dropbox.com/s/kiidfzkegm7p25b/fig9_5_2.png?dl=0"))
-	md"""
-	## 9.5: Directional Derivative
+md"""
+## 9.5: Directional Derivative
 	
-	__*The Gradient of a Function*__ 
-	```math
-	\nabla f(x,y,z) = \frac{\partial f}{\partial x} \mathbf{i} +\frac{\partial f}{\partial y} \mathbf{j} + \frac{\partial f}{\partial z} \mathbf{k} =\underset{\text{vector differential operator}}{\left(\frac{\partial }{\partial x} \mathbf{i}+\frac{\partial }{\partial y} \mathbf{j}+\frac{\partial }{\partial z} \mathbf{k}\right)}f(x,y,z)
-	```
-	__Example__ 
+__*The Gradient of a Function*__ 
+```math
+\nabla f(x,y,z) = \frac{\partial f}{\partial x} \mathbf{i} +\frac{\partial f}{\partial y} \mathbf{j} + \frac{\partial f}{\partial z} \mathbf{k} =\underset{\text{vector differential operator}}{\left(\frac{\partial }{\partial x} \mathbf{i}+\frac{\partial }{\partial y} \mathbf{j}+\frac{\partial }{\partial z} \mathbf{k}\right)}f(x,y,z)
+```
+__Example__ 
 	If ``F(x, y, z) = xy^2 + 3x^2 - z^3`` , find ``\nabla F(x, y, z)`` at ``(2, 1, 4)``.
 	
 ### A Generalization of Partial Differentiation: Directional Derivative
 	
 $fig9_5_2
+	
 """
 end
 
@@ -1566,7 +1567,7 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─5928498a-cee5-4e32-a2c6-d46d3b9dcca4
 # ╟─79a8d881-0e07-44b1-a4cd-783b97db124e
-# ╠═b691771d-5ce5-4937-a249-cb01da6243ac
+# ╟─b691771d-5ce5-4937-a249-cb01da6243ac
 # ╟─30c6cfaa-abca-4099-8bee-c6cc582ef3b2
 # ╟─2d9f3647-327d-4b3f-b002-a4e1e9dbd59c
 # ╟─5437877a-5788-463c-97b3-3a203b878917
@@ -1577,7 +1578,7 @@ version = "0.9.1+5"
 # ╟─ca122aa2-cc1a-45c5-bf96-024eeca7b34e
 # ╟─9d1bddd0-45bb-4789-a388-46719159f497
 # ╟─fa1b0c79-0c40-4e88-ba65-e2565fc9b604
-# ╠═7f229933-ebda-4979-9180-c1902282a4fd
+# ╟─7f229933-ebda-4979-9180-c1902282a4fd
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
