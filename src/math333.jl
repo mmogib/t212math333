@@ -296,9 +296,18 @@ If a *mosquito* is located at ``({1\over 2}, 1, 1)``, in which direction should 
 
 """
 
+# ╔═╡ 0f489937-3266-4d83-880d-c4ec0ebd2d34
+md"## 9.7 Curl and Divergence"
+
+# ╔═╡ 392780ee-6c31-42fb-b311-a7e7df34b1dc
+html"<iframe width=\"380\" height=\"220\" src=\"https://www.youtube.com/embed/rB83DpBJQsE\" title=\"YouTube video player
+\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+
+
 # ╔═╡ 751bff35-70ab-4d5a-909c-692157146226
+
 md"""
-## 9.7 Curl and Divergence
+
 __Vector Fields__ Vector functions of two and three variables,
 ```math
 \begin{array}{lcl} 
@@ -1800,6 +1809,8 @@ version = "0.9.1+5"
 # ╟─ca122aa2-cc1a-45c5-bf96-024eeca7b34e
 # ╟─9d1bddd0-45bb-4789-a388-46719159f497
 # ╟─fa1b0c79-0c40-4e88-ba65-e2565fc9b604
+# ╟─0f489937-3266-4d83-880d-c4ec0ebd2d34
+# ╟─392780ee-6c31-42fb-b311-a7e7df34b1dc
 # ╟─751bff35-70ab-4d5a-909c-692157146226
 # ╟─509d1cbe-f592-4768-a29c-03881e34441c
 # ╟─506abf7e-04b1-4220-9e10-bc9e01383ec3
