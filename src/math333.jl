@@ -4,25 +4,11 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 7f229933-ebda-4979-9180-c1902282a4fd
-begin
-	xs = -1:0.5:1
-	ys = -1:0.5:1
-	
-	using LinearAlgebra
-	
-	df(x, y) = normalize([-y, x]) ./ 10
-	
-	xxs = [-y for x in xs for y in ys]
-	yys = [x for x in xs for y in ys]
-	
-	plt=quiver(xxs, yys, quiver=df)
-	plot!(;frame_style=:origin)
-end
-
 # ╔═╡ 5867632c-fff5-11eb-3a19-2f309efd424a
 begin
+	using LinearAlgebra
 	using PlutoUI, LaTeXStrings
+	using HypertextLiteral
 	using Plots,  PlotThemes
 	using SymPy
 	using FileIO
@@ -33,9 +19,15 @@ end
 # ╔═╡ 5928498a-cee5-4e32-a2c6-d46d3b9dcca4
 TableOfContents(depth=4)
 
-# ╔═╡ 79a8d881-0e07-44b1-a4cd-783b97db124e
+# ╔═╡ 77f286eb-1757-4044-86dd-6a550affea75
 md"""
 # MATH333: Methods of Applied Mathematics 
+## [Syllabus](https://www.dropbox.com/s/zq5pn2yca17y0bu/Syllabus%20Math333-S211.pdf?dl=0)
+"""
+
+# ╔═╡ 79a8d881-0e07-44b1-a4cd-783b97db124e
+md"""
+
 
 ## 9.1 Vector Functions
 
@@ -169,7 +161,7 @@ __Theorem (Chain Rule)__
 
 If ``\mathbf{r}`` is a differentiable vector function and ``s=u(t)`` is a differentiable scalar function, then the derivative of ``mathbf{r}(s)`` with respect to ``t`` is
 ```math
-\frac{d\mathbf{r}}{ds}=\frac{d\mathbf{r}}{ds}\frac{ds}{dt}=\mathbf{r}'(s)u'(t).
+\frac{d\mathbf{r}}{dt}=\frac{d\mathbf{r}}{ds}\frac{ds}{dt}=\mathbf{r}'(s)u'(t).
 ```
 
 
@@ -281,7 +273,7 @@ Let ``f`` represent a function of either two or three variables. Then
 ```math
  D_{\mathbf{u}} f = ||\nabla f||||\mathbf{u}||\cos \phi = ||\nabla f||\cos \phi, \quad (||\mathbf{u}||=1)
 ```
-where ``f`` is the angle between ``\nabla f`` and ``\mathbf{u}``. Because ``0 \leq \phi\leq π``, we have ``1 \leq  \cos \phi \leq 1`` and, 
+where ``f`` is the angle between ``\nabla f`` and ``\mathbf{u}``. Because ``0 \leq \phi\leq π``, we have ``-1 \leq  \cos \phi \leq 1`` and, 
 consequently, ``-||\nabla f|| \leq D_{\mathbf{u}} f \leq ||\nabla f ||``. In other words:
 
 - The __maximum value__ of the directional derivative is ``||\nabla f ||`` and it occurs when ``\mathbf{u}`` has the same direction as ``\nabla f`` (when ``\cos\phi= 1``).
@@ -304,10 +296,233 @@ If a *mosquito* is located at ``({1\over 2}, 1, 1)``, in which direction should 
 
 """
 
+# ╔═╡ 751bff35-70ab-4d5a-909c-692157146226
+md"""
+## 9.7 Curl and Divergence
+__Vector Fields__ Vector functions of two and three variables,
+```math
+\begin{array}{lcl} 
+F(x, y) &=& P(x, y) \mathbf{i} + Q(x, y) \mathbf{j}, \\ \\
+F(x, y, z) &=& P(x, y, z) \mathbf{i} + Q(x, y, z) \mathbf{j} + R(x, y, z) \mathbf{k}
+\end{array}
+```
+are also called __vector fields__.
+"""
+
+# ╔═╡ 509d1cbe-f592-4768-a29c-03881e34441c
+begin
+	xs = -1:0.5:1
+	ys = -1:0.5:1
+	
+	
+	df(x, y) = normalize([-y, x]) ./ 10
+	
+	xxs = [-y for x in xs for y in ys]
+	yys = [x for x in xs for y in ys]
+	
+	plt=quiver(xxs, yys, quiver=df)
+	plot!(;frame_style=:origin)
+	md"""
+	__Example__: Graph the two-dimensional vector field ``F(x, y) = -y \mathbf{i} + x \mathbf{j}``.
+	
+	$plt
+	"""
+end
+
+# ╔═╡ 506abf7e-04b1-4220-9e10-bc9e01383ec3
+md"""
+The del ``\nabla`` operator
+```math
+\nabla = \frac{\partial}{\partial x}\mathbf{i}
++ \frac{\partial}{\partial y}\mathbf{j}
++ \frac{\partial}{\partial z}\mathbf{k}
+```
+combined with a scalar function ``\phi(x, y, z)`` gives the __gradient of ``ϕ``__
+```math
+F(x,y,z)=\nabla\phi  = \frac{\partial\phi}{\partial x}\mathbf{i}
++ \frac{\partial\phi}{\partial y}\mathbf{j}
++ \frac{\partial\phi}{\partial z}\mathbf{k}
+```
+combined with a vector function 
+```math
+F(x, y, z) = P(x,y,z)\mathbf{i} + Q(x,y,z)\mathbf{j}+R(x,y,z)\mathbf{k}
+```
+gives a vector field and a scalar function
+* the __curl of ``F``__
+```math
+\text{curl } F= \nabla \times F
+```
+* the __divergence of ``F``__
+```math
+\text{div } F= \nabla \cdot F
+```
+
+ 
+"""
+
+# ╔═╡ 3e2e4f04-b687-47e7-96d8-6774724a9207
+md"""
+__EXAMPLE__  If ``F=  (x^2y^3 - z^4)\mathbf{i} \;+\; 4x^5y^2z\mathbf{j} \;-\; y^4
+z^6 \mathbf{k}``, find 
+
+(a) ``\text{curl } F``, 
+
+(b) ``\text{div } F``, 
+
+(c) ``\text{div}(\text{curl } F)``
+"""
+
+# ╔═╡ 330410cd-40e8-4398-938d-ee5e4be6f650
+md"""
+__Properties__
+- If f is a scalar function with continuous second partial derivatives, then
+```math
+\text{curl}(\text{grad } f) = \nabla \times \nabla f = 0
+```
+- If F is a vector field having continuous second partial derivatives, then
+```math
+\text{div}(\text{curl } F) = \nabla \cdot \left(\nabla \times F\right) = 0
+```
+
+
+"""
+
+# ╔═╡ b7452e63-29ae-4c5e-87fa-5faecedf986c
+md"""
+## 9.8 Line Integrals
+__*Terminology*__ Suppose ``C`` is a curve parameterized by ``x = f (t), y = g(t), a \leq t \leq b``, and ``A`` and ``B`` are the points ``( f (a), g(a))`` and ``( f (b), g(b))``, respectively. We say that
+
+1. ``C`` is a __smooth curve__ if ``f'`` 	 and ``g'``	 are continuous on the closed interval ``[a, b]`` and not simultaneously zero on the open interval ``(a, b)``.
+2. ``C`` is __piecewise smooth__ if it consists of a finite number of smooth curves ``C_1, C_2, \cdots , C_n`` joined end to end—that is, ``C = C_1 \cup C_2 \cup \cdots \cup C_n``.
+3. ``C`` is a __closed curve__ if ``A = B``.
+4. ``C`` is a __simple closed curve__ if ``A = B`` and the curve does not cross itself.
+5. If ``C`` is not a closed curve, then the __positive direction__ on ``C`` is the direction corresponding to increasing values of ``t``.
+
+"""
+
+# ╔═╡ 0de4e7c3-216a-432a-b998-493a963901cf
+md"""
+__Definition__ (*Line Integrals in the Plane*)
+
+Let ``G`` be a function of two variables ``x`` and ``y`` defined on a region of the plane containing a smooth curve ``C``.
+* The __line integral of ``G`` along ``C`` from ``A`` to ``B`` with respect to ``x``__ is
+```math
+\int_C G(x, y) dx = \lim_{||P||\to 0}\sum_{k=1}^{n}{G(x_k^*,y_k^*)}\Delta x_k.
+```
+* The __line integral of ``G`` along ``C`` from ``A`` to ``B`` with respect to ``y``__ is
+```math
+\int_C G(x, y) dy = \lim_{||P||\to 0}\sum_{k=1}^{n}{G(x_k^*,y_k^*)}\Delta y_k.
+```
+* The __line integral of ``G`` along ``C`` from ``A`` to ``B`` with respect to arc length ``s``__ is
+```math
+\int_C G(x, y) ds = \lim_{||P||\to 0}\sum_{k=1}^{n}{G(x_k^*,y_k^*)}\Delta s_k.
+```
+"""
+
+# ╔═╡ a3f94e01-c503-40f7-a4b2-d40d25401fe3
+@htl("""
+<div style="color: red;font-weight:800;">Method of Evaluation—Curve Defined Parametrically</div>
+<div style="margin: 20px 20px;">$(md"""
+If ``C`` is a smooth curve parameterized by ``x= f (t),y = g(t), a \leq t \leq b``,
+```math
+{\large
+\begin{array}{lcl}
+\int_C G(x,y)dx &=& \int_a^b G(f(t),g(t))f'(t) dt\\ \\
+	
+
+\int_C G(x,y)dx &=& \int_a^b G(f(t),g(t))g'(t) dt \\ \\
+\int_C G(x,y)dx &=& \int_a^b G(f(t),g(t))\sqrt{\left[f'(t)\right]^2+\left[g'(t)\right]^2} dt\\
+	\end{array}
+}
+```
+""")</div>
+""")
+
+# ╔═╡ 52f1f384-ba7f-4a1d-b1fb-311a10ea21a9
+md"""
+A line integral along a __piecewise-smooth curve__ ``C``. For example, if ``C`` is composed of smooth curves ``C_1`` and ``C_2``, then
+```math
+\int_C G(x, y) ds =\int_{C_1} G(x, y) ds +\int_{C_2} G(x, y) ds
+```
+__*Notation*__ In many applications, line integrals appear as a sum
+```math
+\int_C P(x, y) dx +\int_C Q(x, y) dy.
+```
+It is common practice to write this sum as one integral without parentheses as
+```math
+\int_C P(x, y) dx + Q(x, y) dy \quad \text{ or simply }\quad \int_C P dx + Q dy. 
+```
+
+A line integral along a __closed curve ``C``__ is very often denoted by
+```math
+\oint_C P dx + Q dy.
+```
+"""
+
+# ╔═╡ f185e1e7-fc9e-43d2-9f41-43be18c444c3
+md"""
+__Example__ Evaluate ``\oint x dx``, where ``C`` is the circle ``x = \cos t, y = \sin t, 0 ≤ t ≤ 2π``
+
+"""
+
+# ╔═╡ c6ffb2c9-3b92-4032-ab96-1804b11290f5
+begin
+	xEx984=0:0.1:2
+	pltEx984=plot(xEx984,xEx984.^2,frame_style=:origin;c=:blue)
+	plot!(pltEx984;xlims=(-1,3))
+	plot!(pltEx984,repeat([2],11),0:.4:4,c=:blue)
+	plot!(pltEx984,0:.2:2,repeat([0],11),c=:blue)
+	annotate!(pltEx984,
+			[(1.2,0,("^",20,-90.0,:top,:red)),
+			 (2,1.2,("^",20,0.0,:bottom,:red)),
+			(1.2,1.25,("^",20,135.0,:left,:red)),
+			(1.1,2,(L"y=x^2",14,0.0,:bottom,:red))
+			])
+	md"""
+	__Example__ Evaluate ``\oint  y^2 dx - x^2 dy`` on the closed curve ``C`` that is shown below
+	
+	$pltEx984
+	"""
+end
+
+# ╔═╡ 62afd674-74c5-429d-9d21-1673fdb7b385
+md"""
+__Remark__: 
+```math
+\int_{-C} Pdx + Q dy = -\int_{C} Pdx + Q dy
+```
+"""
+
+# ╔═╡ 4c4bd58e-04d5-4da0-8943-6d128a6b749f
+md"""
+__Line Integrals in Space__ 
+If ``C`` is a smooth curve in 3-space defined by the parametric 
+equations ``x = f (t), y = g(t), z = h(t), a \leq t \leq b``, then 
+```math
+\int_C G(x, y, z) dz = \int^b_a G( f(t), g(t), h(t)) h'(t) dt.
+```
+and
+```math
+\int_C G(x, y, z) ds = \int^b_a G( f(t), g(t), h(t)) 
+\sqrt{\left[f'(t)\right]^2+\left[g'(t)\right]^2+\left[h'(t)\right]^2}
+dt.
+```
+"""
+
+# ╔═╡ db44a1a7-705d-4fc9-a16b-cd3032353b3a
+md"""
+__Example__ Evaluate 
+```math
+\int_C y dx + x dy + z dz,
+``` 
+where ``C`` is the helix ``x = 2\cos t, y = 2 \sin t, z = t, 0 \leq t \leq 2\pi``.
+"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -318,6 +533,7 @@ SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
 
 [compat]
 FileIO = "~1.11.0"
+HypertextLiteral = "~0.9.0"
 Images = "~0.24.1"
 LaTeXStrings = "~1.2.1"
 PlotThemes = "~2.0.1"
@@ -650,6 +866,11 @@ deps = ["Base64", "Dates", "IniFile", "Logging", "MbedTLS", "NetworkOptions", "S
 git-tree-sha1 = "44e3b40da000eab4ccb1aecdc4801c040026aeb5"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 version = "0.9.13"
+
+[[HypertextLiteral]]
+git-tree-sha1 = "72053798e1be56026b81d4e2682dbe58922e5ec9"
+uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+version = "0.9.0"
 
 [[IdentityRanges]]
 deps = ["OffsetArrays"]
@@ -1566,6 +1787,7 @@ version = "0.9.1+5"
 
 # ╔═╡ Cell order:
 # ╟─5928498a-cee5-4e32-a2c6-d46d3b9dcca4
+# ╟─77f286eb-1757-4044-86dd-6a550affea75
 # ╟─79a8d881-0e07-44b1-a4cd-783b97db124e
 # ╟─b691771d-5ce5-4937-a249-cb01da6243ac
 # ╟─30c6cfaa-abca-4099-8bee-c6cc582ef3b2
@@ -1578,7 +1800,20 @@ version = "0.9.1+5"
 # ╟─ca122aa2-cc1a-45c5-bf96-024eeca7b34e
 # ╟─9d1bddd0-45bb-4789-a388-46719159f497
 # ╟─fa1b0c79-0c40-4e88-ba65-e2565fc9b604
-# ╟─7f229933-ebda-4979-9180-c1902282a4fd
+# ╟─751bff35-70ab-4d5a-909c-692157146226
+# ╟─509d1cbe-f592-4768-a29c-03881e34441c
+# ╟─506abf7e-04b1-4220-9e10-bc9e01383ec3
+# ╟─3e2e4f04-b687-47e7-96d8-6774724a9207
+# ╟─330410cd-40e8-4398-938d-ee5e4be6f650
+# ╟─b7452e63-29ae-4c5e-87fa-5faecedf986c
+# ╟─0de4e7c3-216a-432a-b998-493a963901cf
+# ╟─a3f94e01-c503-40f7-a4b2-d40d25401fe3
+# ╟─52f1f384-ba7f-4a1d-b1fb-311a10ea21a9
+# ╟─f185e1e7-fc9e-43d2-9f41-43be18c444c3
+# ╟─c6ffb2c9-3b92-4032-ab96-1804b11290f5
+# ╟─62afd674-74c5-429d-9d21-1673fdb7b385
+# ╟─4c4bd58e-04d5-4da0-8943-6d128a6b749f
+# ╟─db44a1a7-705d-4fc9-a16b-cd3032353b3a
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
