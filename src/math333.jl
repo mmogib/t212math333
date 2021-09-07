@@ -428,6 +428,12 @@ Let ``G`` be a function of two variables ``x`` and ``y`` defined on a region of 
 ```
 """
 
+# ╔═╡ 8451fe29-cc80-426e-bc65-43ca5eafb5d3
+Resource("https://www.dropbox.com/s/yjmo0w2fcyg6b5m/Line%20Integral.png?raw=1")
+
+# ╔═╡ 4844492f-27b9-4350-bbd6-66d97b87e909
+Resource("https://www.dropbox.com/s/2o6fus9653k39gd/Line%20Integral%202.png?raw=1",:width=>600)
+
 # ╔═╡ a3f94e01-c503-40f7-a4b2-d40d25401fe3
 @htl("""
 <div style="color: red;font-weight:800;">Method of Evaluation—Curve Defined Parametrically</div>
@@ -470,7 +476,9 @@ A line integral along a __closed curve ``C``__ is very often denoted by
 
 # ╔═╡ f185e1e7-fc9e-43d2-9f41-43be18c444c3
 md"""
-__Example__ Evaluate ``\oint x dx``, where ``C`` is the circle ``x = \cos t, y = \sin t, 0 ≤ t ≤ 2π``
+__Example__ Evaluate ``\oint_C xy^2 dx``, where ``C`` is the quarter-circle ``x = 4\cos t, y = 4\sin t, 0 ≤ t ≤ {π\over 2}``
+
+__Example__ Evaluate ``\oint_C x dx``, where ``C`` is the circle ``x = \cos t, y = \sin t, 0 ≤ t ≤ 2π``
 
 """
 
@@ -488,7 +496,7 @@ begin
 			(1.1,2,(L"y=x^2",14,0.0,:bottom,:red))
 			])
 	md"""
-	__Example__ Evaluate ``\oint  y^2 dx - x^2 dy`` on the closed curve ``C`` that is shown below
+	__Example__ Evaluate ``\oint_C  y^2 dx - x^2 dy`` on the closed curve ``C`` that is shown below
 	
 	$pltEx984
 	"""
@@ -525,6 +533,33 @@ __Example__ Evaluate
 \int_C y dx + x dy + z dz,
 ``` 
 where ``C`` is the helix ``x = 2\cos t, y = 2 \sin t, z = t, 0 \leq t \leq 2\pi``.
+"""
+
+# ╔═╡ 17ab5bf0-65b0-4079-99a0-ccd19721d5c6
+md"""
+__*Remark*__ Let ``F(x,y,z)=P(x,y,z) \mathbf{i}+Q(x,y,z)+\mathbf{j} + R(x,y,z)\mathbf{k}`` be defined along a curve ``C: x = f (t)``, ``y = g(t)``, ``z=h(t)``, ``a \leq t \leq b``, and suppose ``\mathbf{r}(t) = f (t) \mathbf{i} + g(t) \mathbf{j} +h(t) \mathbf{k}`` is the position vector of points on ``C``. We can write the line integral as
+```math
+\int_C P dx + Qdy+Rdz = \int_C F\cdot d\mathbf{r}
+
+```
+
+
+
+"""
+
+# ╔═╡ 07f6f180-ac84-4952-a24f-234990c35191
+md"""
+### Work
+We define the __work__ done by a force field ``F(x,y)=P(x,y)\mathbf{i}+Q(x,y)\mathbf{j}`` along a smooth curve ``C; x=f(t), y=g(t), a\leq t\leq b`` as the line integral
+```math
+W = \int_C P(x, y) dx + Q(x, y) dy\quad \text{or} \quad  W = \int_C F\cdot dr.
+```
+"""
+
+# ╔═╡ b942c102-5698-4086-8056-a053b0ca9d43
+md"""
+__Example__ Find the work ``W = \int_C F · dr`` done by the force ``F = -y^2\mathbf{i} + xy\mathbf{j}`` acting along the curve ``C`` defined by ``x = 2t, y = t^3, 0 ≤ t ≤ 2``
+
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1818,6 +1853,8 @@ version = "0.9.1+5"
 # ╟─330410cd-40e8-4398-938d-ee5e4be6f650
 # ╟─b7452e63-29ae-4c5e-87fa-5faecedf986c
 # ╟─0de4e7c3-216a-432a-b998-493a963901cf
+# ╟─8451fe29-cc80-426e-bc65-43ca5eafb5d3
+# ╟─4844492f-27b9-4350-bbd6-66d97b87e909
 # ╟─a3f94e01-c503-40f7-a4b2-d40d25401fe3
 # ╟─52f1f384-ba7f-4a1d-b1fb-311a10ea21a9
 # ╟─f185e1e7-fc9e-43d2-9f41-43be18c444c3
@@ -1825,6 +1862,9 @@ version = "0.9.1+5"
 # ╟─62afd674-74c5-429d-9d21-1673fdb7b385
 # ╟─4c4bd58e-04d5-4da0-8943-6d128a6b749f
 # ╟─db44a1a7-705d-4fc9-a16b-cd3032353b3a
+# ╟─17ab5bf0-65b0-4079-99a0-ccd19721d5c6
+# ╟─07f6f180-ac84-4952-a24f-234990c35191
+# ╟─b942c102-5698-4086-8056-a053b0ca9d43
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
