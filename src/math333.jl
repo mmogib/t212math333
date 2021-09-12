@@ -1,8 +1,17 @@
 ### A Pluto.jl notebook ###
-# v0.15.1
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
+
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        el
+    end
+end
 
 # ╔═╡ 5867632c-fff5-11eb-3a19-2f309efd424a
 begin
@@ -560,6 +569,236 @@ W = \int_C P(x, y) dx + Q(x, y) dy\quad \text{or} \quad  W = \int_C F\cdot dr.
 md"""
 __Example__ Find the work ``W = \int_C F · dr`` done by the force ``F = -y^2\mathbf{i} + xy\mathbf{j}`` acting along the curve ``C`` defined by ``x = 2t, y = t^3, 0 ≤ t ≤ 2``
 
+"""
+
+# ╔═╡ f84606c4-3de8-4156-a4ea-3df383974de5
+md"""
+## 9.9 Independence of the Path
+In ``2-``space, if 
+```math
+\mathbf{F}(x,y) = P(x,y)\mathbf{i} +Q(x,y)\mathbf{j} \quad \text{is a vector field.}
+```
+and ``C`` is a __path__ defined as
+```math
+\mathbf{r}(t) = f(t)\mathbf{i} + g(t)\mathbf{j}, \quad a\leq t\leq b
+```
+then
+```math
+\int_C Pdx +Qdy = \int_C\mathbf{F}\cdot d\mathbf{r},
+```
+where
+```math
+d\mathbf{r} = dx\mathbf{i} + dy\mathbf{j}
+```
+__*Remark*__
+
+The value of a line integral ``\int_C\mathbf{F}\cdot d\mathbf{r}`` depends on the path of integration. 
+"""
+
+# ╔═╡ f389ba80-79ea-45a8-a8cb-3fdbdcfb1971
+Ex991Paths = @bind ex991path Radio(["c1"=>"C₁", "c2"=>"C₂","c3"=>"C₃","c4"=>"C₄" ], default="c1");html""
+
+# ╔═╡ c3222e2a-cf12-42ba-bc9a-0f914dbfb529
+md"__Example__ Evaluate ``\int_C  y dx + x dy`` on each path shown below
+
+$Ex991Paths 
+"
+
+# ╔═╡ 6363ee6a-df6d-4150-b4c3-5e959bdf8c6c
+begin
+	pltToDisp = plot(;frame_style=:none)
+	indx = parse(Int64,SubString(ex991path,2:2))
+	ex991Solutions = [
+			L"\int_{C_1}  y dx + x dy=\int_0^1 x^2dx+2x^2dx=\int_0^1 3x^2 dx=1" 
+			L"\int_{C_2}  y dx + x dy=\int_0^1 xdx+xdx=\int_0^1 2x dx=1" 
+			L"\int_{C_3}  y dx + x dy=\int_0^1 y\cdot 0+0\cdot 0+\int_0^1 1 dx+x\cdot 0 =\int_0^1 dx=1" 
+			L"\int_{C_3}  y dx + x dy=\int_0^1 0\cdot dx+1\cdot 0+\int_0^1 y\cdot 0+1\cdot dy =\int_0^1 dy=1" 
+		]
+	annotate!(pltToDisp,
+			[
+			 (.5,.2,(ex991Solutions[indx]))
+			])
+	md"""
+	
+	
+	"""
+end
+
+# ╔═╡ 60db1dcb-ef1e-4a4b-b4ad-e2d5415601d8
+begin
+	xEx991=0:0.1:1
+	ticks = [-0.5,0,1,2]
+	ticklabels = [ "$x" for x in ticks ]
+	pltEx991=plot(frame_style=:origin;
+			c=:blue, xlims=(-0.5,2), 
+			ylims=(-0.5,1.2), 
+			yticks=(0:1),
+			xticks=(ticks,ticklabels))
+	annotate!(pltEx991, 
+				[ (0,-0.2,(L"(0,0)",8)),
+				  (1.2,1,(L"(1,1)",8)),
+				  (0,1.3,(L"y",12)),
+				  (2,-0.3,(L"x",12))
+				]
+			 )
+	scatter!(pltEx991,[0 1],[0 1], c=:black)
+	
+	pltEx991a=plot(pltEx991,xEx991,xEx991.^2,c=:blue)
+	annotate!(pltEx991a,[(0.4,0.7,(L"y=x^2",12,0.0,:top,:black)),
+			(0.5,0.25,("^",12,-45.0,:top,:red)),
+			(0.8,0.8^2,("^",12,-45.0,:top,:red))] )
+	
+		
+	pltEx991b=plot(pltEx991,xEx991,xEx991,c=:blue)
+	annotate!(pltEx991b,[(0.6,0.3,(L"y=x",12,0.0,:top,:black)),
+			(0.3,0.3,("^",12,-45.0,:top,:red)),
+			(0.65,0.65,("^",12,-45.0,:top,:red))] )
+	
+	
+	pltEx991c=plot(pltEx991,repeat([0],11),0:.1:1,c=:blue)
+	plot!(pltEx991c,0:.1:1,repeat([1],11),c=:blue)
+	annotate!(pltEx991c,[(0,0.5,("^",12,0,:top,:red)),
+			(0.65,1,("^",12,-90.0,:top,:red))] )
+	
+	pltEx991d=plot(pltEx991,repeat([1],11),0:.1:1,c=:blue)
+	plot!(pltEx991d,0:.1:1,repeat([0],11),c=:blue)
+	annotate!(pltEx991d,[(0.5,0,("^",12,-90.0,:top,:red)),
+			(1,0.65,("^",12,0.0,:top,:red))] )
+	
+	l = @layout([a b;c d; e])
+	plt991=plot(pltEx991a,pltEx991b,pltEx991c,pltEx991d,pltToDisp, layout=l, 
+		title=[L"C_1" L"C_2" L"C_3" L"C_4"])
+	md"""
+	$plt991
+	"""
+end
+
+# ╔═╡ ca86c2c9-7416-4d45-bcec-a644c151a43f
+md"""
+### Conservative Vector Field
+__Definition__: A vector function ``\mathbf{F}`` in ``2-`` or ``3-``space is said to be __conservative__ if ``\mathbf{F}`` can be written as the 
+gradient of a scalar function ``\phi``. The function ``\phi`` is called a __potential function__ for ``\mathbf{F}``.
+
+__*Example*__:  Is ``\mathbf{F}(x,y)=y\mathbf{i}+x\mathbf{j}`` conservative?
+"""
+
+# ╔═╡ efd8e89b-6f7d-44d2-b798-5e0c06fd3622
+md"""
+### Path Independence 
+If the value of a line integral is the same for every path in a region 
+connecting the initial point ``A`` and terminal point ``B``, then the integral is said to be __independent of the path__.
+
+"""
+
+# ╔═╡ fba21f02-4aa0-46a1-b900-386647c20450
+md"""
+__Theorem__ Fundamental Theorem for Line Integrals
+
+Suppose ``C`` is a path in an open region ``R`` of the ``xy-``plane and is defined by ``r(t) = x(t)\mathbf{i} + y(t)\mathbf{j}``,``a \leq t \leq b``. If ``\mathbf{F}(x, y) = P(x, y)\mathbf{i} + Q(x, y)\mathbf{j}`` is a conservative vector field in ``R`` and ``\phi`` is a potential function for ``\mathbf{F}``, then
+```math
+\int_C \mathbf{F}\cdot d\mathbf{r} =\int_C f\cdot \nabla \phi\cdot d\mathbf{r} = \phi(B) - \phi(A), 
+```
+where ``A = (x(a), y(a))`` and ``B = (x(b), y(b))``.
+
+__*Example*__
+Evaluate ``\int_C ydx + xdy``, where ``C`` is a path with initial point ``(0, 0)`` and terminal point ``(1, 1)``.
+"""
+
+# ╔═╡ ed3590a1-b43a-4212-81a8-bed8b21f0858
+md"""
+__Terminology__
+
+- We say that a region (in the plane or in space) is __connected__ if every pair of points ``A`` and ``B`` in the region can be joined by a piecewise-smooth curve that lies entirely in the region. 
+- A region ``R`` in the plane is __simply connected__ if it is connected and every simple closed curve ``C`` lying entirely within the region can be shrunk, or contracted, to a point without leaving ``R``. A simply connected region has no holes 
+in it. 
+
+__Theorem__ 
+
+In an open connected region ``R``, ``\int_C \mathbf{F}\cdot d\mathbf{r}`` is independent of the path ``C`` if and only if the vector field ``\mathbf{F}`` is conservative in ``R``.
+"""
+
+# ╔═╡ 0615d26b-858d-4a03-8595-e85da72adca7
+md"""
+###  Integrals Around Closed Paths
+__Theorem__
+
+In an open connected region ``R``, ``\int_C \mathbf{F}\cdot d\mathbf{r}`` is independent of the path if and only if ``\int_C \mathbf{F}\cdot d\mathbf{r}=0``
+for every closed path ``C`` in ``R``.
+"""
+
+# ╔═╡ 36380af4-f8de-4b7e-97c8-65673754ff76
+md"""
+__Summary__
+
+```math
+\mathbf{F} \text{ conservative} \Longleftrightarrow \text{ path independence} \Longleftrightarrow 
+\int_C \mathbf{F}\cdot d\mathbf{r}=0.
+```
+
+"""
+
+# ╔═╡ 5febf63a-7834-4248-8884-7be76bb08202
+md"""
+### Test for a Conservative Field
+__Theorem (*Test for a Conservative Field*)__
+
+Suppose ``\mathbf{F}(x, y) = P(x, y)\mathbf{i} + Q(x, y)\mathbf{j}`` is a conservative vector field in an open region ``R``, and that ``P`` and ``Q`` are continuous and have continuous first partial derivatives in ``R``. Then
+```math
+\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}
+```
+for all ``(x, y)`` in ``R``. Conversely, if the equality holds for all ``(x, y)`` in a simply connected region ``R``, then ``\mathbf{F}`` is conservative in ``R``.
+
+"""
+
+# ╔═╡ d1b8b4eb-e856-4745-9b83-808e2c55b49f
+md"""
+__Example__
+
+Determine which of the vector fields is conservative
+```math
+\begin{array}{lcl}
+\mathbf{F}(x, y) &=& (x^2-2y^3)\mathbf{i} + (x + 5y)\mathbf{j} \\
+\mathbf{F}(x, y) &=& -ye^{-xy}\mathbf{i} + -xe^{-xy}\mathbf{j} \\
+\end{array}
+```
+"""
+
+# ╔═╡ b0a55996-3e23-4696-9a5c-94284b982155
+md"""
+__Example__ 
+
+(a) Show that ``\int_C \mathbf{F}\cdot d\mathbf{r}``, where ``\mathbf{F}(x, y) = (y^2 - 6xy + 6)\mathbf{i} + (2xy - 3x^2 - 2y)\mathbf{j}``, is independent of the path ``C`` between ``(-1, 0)`` and ``(3, 4)``.
+
+(b) Find a potential function ``\phi`` for ``\mathbf{F}``.
+
+(c) Evaluate ``\int_{(-1,0)}^{(3,4)}\mathbf{F}\cdot d\mathbf{r}``.
+
+"""
+
+# ╔═╡ 02561b84-2447-4462-91e9-4872c44e1ebe
+md"""
+### Conservative Vector Fields in 3-Space
+```math
+\mathbf{F}(x, y,z) = P(x, y,z)\mathbf{i} + Q(x, y,z)\mathbf{j} + R(x, y,z)\mathbf{k}
+```
+If ``\mathbf{F}`` is conservative and ``P, Q,`` and ``R`` are continuous and have continuous first partial derivatives in some open region of 3-space, then
+```math
+\frac{\partial P}{\partial y}
+= \frac{\partial Q}{\partial x},
+\quad \frac{\partial P}{\partial z}
+= \frac{\partial R}{\partial x},
+\quad  \frac{\partial Q}{\partial z}=\frac{\partial R}{\partial y}
+
+```
+__Remark__
+```math
+\text{curl}(\mathbf{F}) = 0
+```
+"""
+
+# ╔═╡ 9badddfe-d618-421e-89c9-e54639b94423
+md"""
+## 9.12 Green’s Theorem
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1865,6 +2104,22 @@ version = "0.9.1+5"
 # ╟─17ab5bf0-65b0-4079-99a0-ccd19721d5c6
 # ╟─07f6f180-ac84-4952-a24f-234990c35191
 # ╟─b942c102-5698-4086-8056-a053b0ca9d43
+# ╟─f84606c4-3de8-4156-a4ea-3df383974de5
+# ╟─f389ba80-79ea-45a8-a8cb-3fdbdcfb1971
+# ╟─c3222e2a-cf12-42ba-bc9a-0f914dbfb529
+# ╟─6363ee6a-df6d-4150-b4c3-5e959bdf8c6c
+# ╟─60db1dcb-ef1e-4a4b-b4ad-e2d5415601d8
+# ╟─ca86c2c9-7416-4d45-bcec-a644c151a43f
+# ╟─efd8e89b-6f7d-44d2-b798-5e0c06fd3622
+# ╟─fba21f02-4aa0-46a1-b900-386647c20450
+# ╟─ed3590a1-b43a-4212-81a8-bed8b21f0858
+# ╟─0615d26b-858d-4a03-8595-e85da72adca7
+# ╟─36380af4-f8de-4b7e-97c8-65673754ff76
+# ╟─5febf63a-7834-4248-8884-7be76bb08202
+# ╟─d1b8b4eb-e856-4745-9b83-808e2c55b49f
+# ╟─b0a55996-3e23-4696-9a5c-94284b982155
+# ╟─02561b84-2447-4462-91e9-4872c44e1ebe
+# ╟─9badddfe-d618-421e-89c9-e54639b94423
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
