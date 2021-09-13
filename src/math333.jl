@@ -709,8 +709,10 @@ md"""
 __Terminology__
 
 - We say that a region (in the plane or in space) is __connected__ if every pair of points ``A`` and ``B`` in the region can be joined by a piecewise-smooth curve that lies entirely in the region. 
-- A region ``R`` in the plane is __simply connected__ if it is connected and every simple closed curve ``C`` lying entirely within the region can be shrunk, or contracted, to a point without leaving ``R``. A simply connected region has no holes 
-in it. 
+- A region ``R`` in the plane is __simply connected__ if it is connected and every simple closed curve ``C`` lying entirely within the region can be shrunk, or contracted, to a point without leaving ``R``. A simply connected region has no holes in it. 
+- A region that is not connected is called __disconnected__.
+- A region that is connected with multiple holes is called __multiply connected__.
+- A region ``R`` is said to be __open__ if it contains no boundary points.
 
 __Theorem__ 
 
@@ -799,6 +801,34 @@ __Remark__
 # ╔═╡ 9badddfe-d618-421e-89c9-e54639b94423
 md"""
 ## 9.12 Green’s Theorem
+"""
+
+# ╔═╡ b0a38158-bfdb-4b6b-bf70-7d6405da0c2b
+md"""
+### Line Integrals Along Simple Closed Curves
+__Definition__ 
+- The __positive direction__ around a simple closed curve ``C`` is that direction a point on the curve must move in order to keep the region ``R`` bounded by ``C`` to the left.
+- The __positive__ and *negative* directions correspond to the __counterclockwise__ and *clockwise* directions, respectively.
+
+__Theorem__ (*Green’s Theorem in the Plane*)
+Suppose that ``C`` is a piecewise-smooth simple closed curve bounding a simply connected region ``R``. If ``P``, ``Q``, ``\partial P/\partial y``, and ``\partial Q/\partial x`` are continuous on ``R``, then
+```math
+\oint_C P dx + Q dy = \iint_R \left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right) dA. 
+```
+"""
+
+# ╔═╡ 506a2816-5d1f-4792-93ed-cbf526888897
+md"""
+__EXAMPLE__ Evaluate 
+```math
+\oint_C (x^2 - y^2) dx + (2y - x) dy,
+```
+where ``C`` consists of the boundary of the region in the 
+first quadrant that is bounded by the graphs of 
+```math
+y = x^2 \quad \text{ and } y = x^3.
+```
+
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -2120,6 +2150,8 @@ version = "0.9.1+5"
 # ╟─b0a55996-3e23-4696-9a5c-94284b982155
 # ╟─02561b84-2447-4462-91e9-4872c44e1ebe
 # ╟─9badddfe-d618-421e-89c9-e54639b94423
+# ╟─b0a38158-bfdb-4b6b-bf70-7d6405da0c2b
+# ╟─506a2816-5d1f-4792-93ed-cbf526888897
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
