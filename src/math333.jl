@@ -831,6 +831,87 @@ y = x^2 \quad \text{ and } y = x^3.
 
 """
 
+# ╔═╡ 6bc1fefb-be6c-4e38-9299-13a632d2ee34
+md"""
+__EXAMPLE__ 
+Evaluate (+)
+```math
+\oint_C (x^5 + 3y) dx + (2x - e^{y^3}) dy, 
+```
+where ``C`` is the circle ``(x - 1)^2 + ( y - 5)^2 = 4``.
+"""
+
+# ╔═╡ 4958f085-527e-4ea7-b004-82d1317e1ed7
+begin
+	sec912ex4 = Resource("https://www.dropbox.com/s/khnwio2m5kiy1j8/sec912ex4.png?raw=1")
+	md"""
+	__Example__
+	Let ``C`` be the closed curve consisting of the four straight line segments ``C_1``, ``C_2``, ``C_3``, ``C_4`` shown below. 
+	
+	$sec912ex4
+
+	Green’s theorem is not applicable to the line integral
+	```math
+	\oint_C \frac{-y}{x^2+y^2} dx +  \frac{x}{x^2+y^2} dy
+	```
+	since ``P, Q, \partial P/\partial y``, and ``\partial Q/\partial x`` are not continuous at the origin.
+
+	"""
+end
+
+# ╔═╡ 5aa87065-e94c-425a-bf24-d197aaacafd8
+begin
+	region_with_holes = Resource("https://www.dropbox.com/s/yvmj37mezm05o1u/region_with_holes.png?raw=1")	
+	md"""
+	### Region with Holes
+	
+	$region_with_holes
+	
+	
+	"""
+end
+
+# ╔═╡ ea5a1ed0-4494-4850-8943-18d8029cf356
+begin
+	sec912ex5=Resource("https://www.dropbox.com/s/rnrf7u7fhynyodp/sec912ex5.png?raw=1")
+	md"""
+	__EXAMPLE__
+	Evaluate  
+	```math
+	\oint_C \frac{-y}{x^2+y^2} dx + \frac{x}{x^2+y^2} dy
+	```
+	where ``C = C_1 \cup C_2`` is the boundary of the shaded region ``R`` shown 
+	
+	$sec912ex5
+	"""
+end
+
+# ╔═╡ a53e17e1-bb2d-4d41-b8e0-1df381601af5
+begin
+	sec912rem = Resource("https://www.dropbox.com/s/t2496eg6087q1zs/sec912rem.png?raw=1")
+md"""
+__*Remark*__
+	In the following figure, suppose that ``C_1`` and ``C_2`` are two nonintersecting 
+piecewise-smooth simple closed paths that have the same counterclockwise orientation. 
+	
+$sec912rem
+	
+Suppose further that ``P`` and ``Q`` have continuous first partial derivatives such that
+```math
+\frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x}
+```
+in the region ``R`` bounded between ``C_1`` and ``C_2``. Then
+```math
+\oint_{C_1} P dx + Q dy =\oint_{C_2} P dx + Q dy.
+```
+
+"""
+end
+
+
+# ╔═╡ fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
+md"__Example__: Solve example 
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -2152,6 +2233,12 @@ version = "0.9.1+5"
 # ╟─9badddfe-d618-421e-89c9-e54639b94423
 # ╟─b0a38158-bfdb-4b6b-bf70-7d6405da0c2b
 # ╟─506a2816-5d1f-4792-93ed-cbf526888897
+# ╟─6bc1fefb-be6c-4e38-9299-13a632d2ee34
+# ╟─4958f085-527e-4ea7-b004-82d1317e1ed7
+# ╟─5aa87065-e94c-425a-bf24-d197aaacafd8
+# ╟─ea5a1ed0-4494-4850-8943-18d8029cf356
+# ╟─a53e17e1-bb2d-4d41-b8e0-1df381601af5
+# ╠═fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
