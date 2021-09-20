@@ -841,11 +841,27 @@ Evaluate (+)
 where ``C`` is the circle ``(x - 1)^2 + ( y - 5)^2 = 4``.
 """
 
+# ╔═╡ de3153ea-e97d-4fda-b70f-bd23b49cd8b7
+begin
+	sec912ex3 = Resource("https://www.dropbox.com/s/b4uwhqw0ih5kneh/sec912ex3.png?raw=1")
+	md"""
+	__EXAMPLE__ 
+	Find the work done by the force 
+	```math
+	\mathbf{F} =(-16y - \sin x^2) \mathbf{i} + (4e^y + 3x^2)\mathbf{j}
+	```
+	acting along the simple closed curve C shown
+	
+	$sec912ex3
+	"""
+end
+
 # ╔═╡ 4958f085-527e-4ea7-b004-82d1317e1ed7
 begin
 	sec912ex4 = Resource("https://www.dropbox.com/s/khnwio2m5kiy1j8/sec912ex4.png?raw=1")
 	md"""
-	__Example__
+	__Example 💣__
+	
 	Let ``C`` be the closed curve consisting of the four straight line segments ``C_1``, ``C_2``, ``C_3``, ``C_4`` shown below. 
 	
 	$sec912ex4
@@ -910,7 +926,7 @@ end
 
 
 # ╔═╡ fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
-md"__Example__: Solve example 
+md"__Example__: Solve example  💣"
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1542,9 +1558,9 @@ uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
 [[MKL_jll]]
 deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "Pkg"]
-git-tree-sha1 = "c253236b0ed414624b083e6b72bfe891fbd2c7af"
+git-tree-sha1 = "5455aef09b40e5020e1520f551fa3135040d4ed0"
 uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
-version = "2021.1.1+1"
+version = "2021.1.1+2"
 
 [[MacroTools]]
 deps = ["Markdown", "Random"]
@@ -2234,11 +2250,12 @@ version = "0.9.1+5"
 # ╟─b0a38158-bfdb-4b6b-bf70-7d6405da0c2b
 # ╟─506a2816-5d1f-4792-93ed-cbf526888897
 # ╟─6bc1fefb-be6c-4e38-9299-13a632d2ee34
+# ╟─de3153ea-e97d-4fda-b70f-bd23b49cd8b7
 # ╟─4958f085-527e-4ea7-b004-82d1317e1ed7
 # ╟─5aa87065-e94c-425a-bf24-d197aaacafd8
 # ╟─ea5a1ed0-4494-4850-8943-18d8029cf356
 # ╟─a53e17e1-bb2d-4d41-b8e0-1df381601af5
-# ╠═fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
+# ╟─fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
