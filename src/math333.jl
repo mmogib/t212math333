@@ -798,6 +798,9 @@ __Remark__
 ```
 """
 
+# ╔═╡ a0f19e1e-2ee6-440c-8c39-9e1f0d07b2d5
+x, y = symbols("x,y", real=true);html""
+
 # ╔═╡ 9badddfe-d618-421e-89c9-e54639b94423
 md"""
 ## 9.12 Green’s Theorem
@@ -902,6 +905,15 @@ begin
 	"""
 end
 
+# ╔═╡ 00f35bc7-5456-4a97-a474-166bde07dea8
+begin 
+	P(x,y)=-y/(x^2+y^2)
+	Q(x,y)=x/(x^2+y^2)
+	Py=simplify(diff(P(x,y),y))
+	Qx=factor(simplify(diff(Q(x,y),x)))
+	Py,Qx
+end
+
 # ╔═╡ a53e17e1-bb2d-4d41-b8e0-1df381601af5
 begin
 	sec912rem = Resource("https://www.dropbox.com/s/t2496eg6087q1zs/sec912rem.png?raw=1")
@@ -927,6 +939,166 @@ end
 
 # ╔═╡ fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
 md"__Example__: Solve example  💣"
+
+# ╔═╡ 7fbbe932-5b35-4fa5-a649-46cba8b5df47
+md"""
+## 9.13 Surface Integrals
+__Definition__ (Surface Area)
+
+Let ``f`` be a function for which the first partial derivatives ``f_x`` and ``f_y`` are continuous on a closed region ``R``. Then the area of the surface over ``R`` is given by
+
+```math
+A(S) = \iint_R \sqrt{1 + \left[f_x(x, y)\right]^2 + \left[f_y(x, y)\right]^2} dA.
+```
+__Differential of Surface Area The function__
+```math
+dS = \sqrt{1 + \left[f_x(x, y)\right]^2 + \left[f_y(x, y)\right]^2} dA
+```
+is called the __differential of the surface area__.
+"""
+
+# ╔═╡ 5ab19faa-f029-48d4-b9d3-7cef666acd1e
+begin
+	sec913si=Resource("https://www.dropbox.com/s/kvzr3futqo4pv66/sec913sui.png?raw=1",:width=>500)
+md"""
+$sec913si
+"""
+end
+
+# ╔═╡ 4fdfad2e-e860-4358-b888-b6642fa0b6c3
+md"""
+__Remark__ The surface area integral is a generalization of the arc length integral.
+"""
+
+# ╔═╡ 3aa6fe06-ae82-48dc-9999-877533fa21ae
+md"""
+### Surface Integral
+The generalization of the line integral ``\int_C G(x, y) ds`` is called a __surface integral__
+"""
+
+# ╔═╡ b4305759-a665-429a-a888-fadf5280b6ba
+md"""
+__Definition__ (Surface Integral)
+
+
+Let ``G`` be a function of three variables defined over a region of 3-space containing the surface ``S``. Then the __surface integral of ``G`` over ``S``__ is given by
+```math
+\iint_S G(x, y, z) dS = \lim_{\|P\|\to 0} \sum_{k=1}^n G(x^*_k, y^*_k, z^*_k) \Delta S_k.
+```
+__Method of Evaluation__
+```math
+\iint_S G(x, y, z) dS = \iint_R G(x, y, f(x,y))\sqrt{1 + \left[f_x(x, y)\right]^2 + \left[f_y(x, y)\right]^2} dA 
+```
+- If ``y=g(x,z)`` and ``R`` on ``xz-``plane, then
+```math
+\iint_S G(x, y, z) dS = \iint_R G(x, g(x,z),z)\sqrt{1 + \left[g_x(x, z)\right]^2 + \left[g_z(x, z)\right]^2} dA 
+```
+- If ``x=h(y,z)`` and ``R`` on ``yz-``plane, then
+```math
+\iint_S G(x, y, z) dS = \iint_R G(h(y,z),y,z)\sqrt{1 + \left[h_y(y, z)\right]^2 + \left[h_z(y, z)\right]^2} dA 
+```
+"""
+
+# ╔═╡ dd993ad7-758c-4cee-93ad-f9d62277e90b
+md"""
+__Remark__
+
+- __Mass of a Surface__ Suppose ``\rho(x, y, z)`` represents the density of a surface at any point, or mass per unit surface area; then the mass ``m`` of the surface is
+```math
+m = \iint_S \rho(x, y, z) dS.
+```
+__Example__ Find the mass of the surface of the paraboloid ``z = 1 + x^2 + y^2`` in the first octant for ``1 \leq z \leq 5`` if the density at a point ``P`` on the surface is directly proportional to its distance from the ``xy``-plane.
+"""
+
+# ╔═╡ 1e20d2a6-bea6-4c16-862c-eaec3bb99d9a
+md"""
+__Example__
+Evaluate ``\iint_S xz^2 dS``, where ``S`` is that portion of the cylinder ``y = 2x^2 + 1`` in the first octant bounded by ``x = 0, x = 2, z = 4``, and ``z = 8``.
+"""
+
+# ╔═╡ ffd52892-0427-49b2-8b1e-891d64c6c688
+md"""
+__Orientable Surfaces__
+* Roughly, an __orientable surface ``S``__, with two sides that could be painted different colors. 
+* The Möbius strip is not an orientable surface and is one-sided. A person who starts to paint the surface of a Möbius strip at a point will paint the entire surface and return to the starting point
+
+"""
+
+# ╔═╡ 71e53648-d66d-400a-9f5c-1ee9a9b8b9c5
+@htl("<iframe width='560' height='315' src='https://www.youtube.com/embed/pgbHR290RW8' title='YouTube video playe' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>")
+
+# ╔═╡ b9c77a2e-c384-4313-bea8-2694ab4dfc56
+md"""
+We say a smooth surface ``S`` is __orientable__ or is an __oriented surface__ if there exists a continuous unit normal vector function ``\mathbf{n}`` defined at each point ``(x, y, z)`` on the surface. The vector field ``\mathbf{n}(x, y, z)`` is called the __orientation__ of ``S``.
+
+
+"""
+
+# ╔═╡ e997b0f3-98de-4fd6-8ea5-e4b3440f0f5a
+Resource("https://www.dropbox.com/s/6o9vhuyls0lp03g/sec913mobus.png?raw=1",:width=>500)
+
+# ╔═╡ bbe13ec2-af6b-40fa-b4f7-74a68d59298d
+md"""
+A surface ``S`` defined by ``z = f (x, y)`` has an upward orientation when the unit 
+normals are directed upward—that is, have positive ``k`` components, and it has a downward orientation when the unit normals are directed downward—that is, have 
+negative ``k`` components. 
+
+If a smooth surface ``S`` is defined by ``g(x, y, z) = 0``, then recall that a unit normal is
+```math
+\mathbf{n} =\frac{1}{\|\nabla g\|}\nabla g
+```
+"""
+
+
+# ╔═╡ 45aac5bb-e392-4eb0-8a5e-976fa6f17938
+begin
+	sec913flux = Resource("https://www.dropbox.com/s/60txes56q202gij/sec913flux.png?raw=1",:width=>300)
+md"""
+### Integrals of Vector Fields
+If ``\mathbf{F}(x, y, z) = P(x, y, z) \mathbf{i} + Q(x, y, z) \mathbf{j} + R(x, y, z) \mathbf{k}`` is the velocity field of a fluid, then, as shown here,
+
+$sec913flux
+the volume of the fluid flowing through an element of surface area ``S`` per unit time is approximated by
+```math
+\text{(height)(area of base)} = (\text{comp}_n\mathbf{F})\Delta S = (F \cdot n) \Delta S
+```
+"""
+end
+
+# ╔═╡ 904f1f79-4866-4837-b128-c8a30567fa76
+md"""
+The total volume of a fluid passing through ``S`` per unit time is called the __flux of ``\mathbf{F}`` through ``S``__ and is given by
+```math 
+\text{flux} =\iint_S (\mathbf{F} \cdot \mathbf{n}) dS. \tag{*}
+```
+In the case of a closed surface ``S``, if ``\mathbf{n}`` is the outer (inner) normal, then (*) gives the volume of fluid flowing out (in) through ``S`` per unit time.
+"""
+
+# ╔═╡ ce1a2204-adfd-4862-a5fc-8637dcc1ce9d
+md"""
+__EXAMPLE__ Flux Through a Surface
+Let 
+```math 
+\mathbf{F}(x, y, z) = z \mathbf{j} + z \mathbf{k}
+```
+represent the flow of a liquid. Find the flux of ``F`` through the surface ``S``
+given by that portion of the plane 
+```math
+z = 6 - 3x - 2y
+```
+in the first octant oriented upward.
+"""
+
+# ╔═╡ 81441e8f-253c-44a3-b160-c0ac350791ae
+md"""
+__Remark__ 
+Then the flux of a vector field ``\mathbf{F}`` out of the surface ``S`` is
+```math
+\iint_S \mathbf{F}\cdot \mathbf{n} dS =\iint_{S_1} \mathbf{F}\cdot \mathbf{n} dS
++\iint_{S_2} \mathbf{F}\cdot \mathbf{n} dS
+```
+where we take ``S_1`` oriented upward and ``S_2`` oriented downward.
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2246,6 +2418,7 @@ version = "0.9.1+5"
 # ╟─d1b8b4eb-e856-4745-9b83-808e2c55b49f
 # ╟─b0a55996-3e23-4696-9a5c-94284b982155
 # ╟─02561b84-2447-4462-91e9-4872c44e1ebe
+# ╟─a0f19e1e-2ee6-440c-8c39-9e1f0d07b2d5
 # ╟─9badddfe-d618-421e-89c9-e54639b94423
 # ╟─b0a38158-bfdb-4b6b-bf70-7d6405da0c2b
 # ╟─506a2816-5d1f-4792-93ed-cbf526888897
@@ -2254,8 +2427,25 @@ version = "0.9.1+5"
 # ╟─4958f085-527e-4ea7-b004-82d1317e1ed7
 # ╟─5aa87065-e94c-425a-bf24-d197aaacafd8
 # ╟─ea5a1ed0-4494-4850-8943-18d8029cf356
+# ╠═00f35bc7-5456-4a97-a474-166bde07dea8
 # ╟─a53e17e1-bb2d-4d41-b8e0-1df381601af5
 # ╟─fb03d35d-9a94-4824-bb95-5c48a9a6ad7f
+# ╟─7fbbe932-5b35-4fa5-a649-46cba8b5df47
+# ╟─5ab19faa-f029-48d4-b9d3-7cef666acd1e
+# ╟─4fdfad2e-e860-4358-b888-b6642fa0b6c3
+# ╟─3aa6fe06-ae82-48dc-9999-877533fa21ae
+# ╟─b4305759-a665-429a-a888-fadf5280b6ba
+# ╟─dd993ad7-758c-4cee-93ad-f9d62277e90b
+# ╟─1e20d2a6-bea6-4c16-862c-eaec3bb99d9a
+# ╟─ffd52892-0427-49b2-8b1e-891d64c6c688
+# ╟─71e53648-d66d-400a-9f5c-1ee9a9b8b9c5
+# ╟─b9c77a2e-c384-4313-bea8-2694ab4dfc56
+# ╟─e997b0f3-98de-4fd6-8ea5-e4b3440f0f5a
+# ╟─bbe13ec2-af6b-40fa-b4f7-74a68d59298d
+# ╟─45aac5bb-e392-4eb0-8a5e-976fa6f17938
+# ╟─904f1f79-4866-4837-b128-c8a30567fa76
+# ╟─ce1a2204-adfd-4862-a5fc-8637dcc1ce9d
+# ╟─81441e8f-253c-44a3-b160-c0ac350791ae
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
