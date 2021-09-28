@@ -1100,6 +1100,57 @@ Then the flux of a vector field ``\mathbf{F}`` out of the surface ``S`` is
 where we take ``S_1`` oriented upward and ``S_2`` oriented downward.
 """
 
+# ╔═╡ ea174feb-97f8-497d-8a47-2fcdfeef29c8
+md"""
+## 9.14 Stokes’ Theorem
+Green’s theorem can be written in vector notation as
+```math
+\oint_C \mathbf{F}\cdot d\mathbf{r}=\oint_C \mathbf{F}\cdot\mathbf{T} ds
+=\iint_R (\text{curl }\mathbf{F})\cdot \mathbf{k} dA
+```
+that is, the line integral of the tangential component of ``\mathbf{F}`` is the double integral of the normal component of ``\text{curl }\mathbf{F}``.
+"""
+
+# ╔═╡ 47751cc9-f4e0-400e-8b6e-5c37c954ce96
+md"""
+__Stokes’ Theorem__
+
+Let ``S`` be a piecewise-smooth orientable surface bounded by a piecewise-smooth simple closed curve ``C``. Let 
+```math
+\mathbf{F}(x, y, z)= P(x, y, z) \mathbf{i} + Q(x, y, z) \mathbf{j} + R(x, y, z) \mathbf{k}
+```
+be a vector field for which ``P,Q``, and ``R`` are continuous and have continuous first partial derivatives in a region of 3-space containing ``S``. If ``C`` is traversed in the positive direction, then 
+```math
+\oint_C \mathbf{F}\cdot d\mathbf{r}=\oint_C (\mathbf{F}\cdot \mathbf{T}) dS 
+= \iint_S (\text{curl }\mathbf{F})\cdot \mathbf{n} dS,
+```
+where ``\mathbf{n}`` is a unit normal to ``S`` in the direction of the orientation of ``S``.
+"""
+
+# ╔═╡ a0d30cd9-2fbf-45be-b20d-da3619755922
+md"""
+__EXAMPLE__
+
+Let ``S`` be the part of the cylinder ``z = 1 - x^2`` for ``0 \leq x \leq 1``, 
+``-2\leq y \leq 2``. Verify Stokes’ theorem for the vector field 
+```math
+\mathbf{F} = xy \mathbf{i} + yz \mathbf{j} + xz \mathbf{k}.
+```
+Assume ``S`` is oriented upward.
+
+"""
+
+# ╔═╡ b3f1155f-fc04-4a35-ab00-d9f7851c5b12
+md"""
+__EXAMPLE__
+Evaluate 
+```math
+\oint_C z dx + x dy + y dz,
+```
+where ``C`` is the trace of the cylinder ``x^2 + y^2 = 1`` in the plane ``y + z = 2``. Orient ``C`` counterclockwise as viewed from above.
+
+"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -2446,6 +2497,10 @@ version = "0.9.1+5"
 # ╟─904f1f79-4866-4837-b128-c8a30567fa76
 # ╟─ce1a2204-adfd-4862-a5fc-8637dcc1ce9d
 # ╟─81441e8f-253c-44a3-b160-c0ac350791ae
+# ╟─ea174feb-97f8-497d-8a47-2fcdfeef29c8
+# ╟─47751cc9-f4e0-400e-8b6e-5c37c954ce96
+# ╟─a0d30cd9-2fbf-45be-b20d-da3619755922
+# ╟─b3f1155f-fc04-4a35-ab00-d9f7851c5b12
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
