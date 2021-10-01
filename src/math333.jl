@@ -1127,6 +1127,15 @@ be a vector field for which ``P,Q``, and ``R`` are continuous and have continuou
 where ``\mathbf{n}`` is a unit normal to ``S`` in the direction of the orientation of ``S``.
 """
 
+# ╔═╡ a89ccf32-03b9-45c3-be77-7029ee8fdfee
+begin
+sec913intro = Resource("https://www.dropbox.com/s/gtbyo6j5yek2gsv/sec913intro.png?raw=1")
+md""" 
+
+$sec913intro
+"""
+end
+
 # ╔═╡ a0d30cd9-2fbf-45be-b20d-da3619755922
 md"""
 __EXAMPLE__
@@ -1149,6 +1158,76 @@ Evaluate
 ```
 where ``C`` is the trace of the cylinder ``x^2 + y^2 = 1`` in the plane ``y + z = 2``. Orient ``C`` counterclockwise as viewed from above.
 
+"""
+
+# ╔═╡ 2111a86d-051a-406f-9cf5-934f4f35e2c3
+md"""
+## 9.16 Divergence Theorem
+Recall that Green’s theorem (Tangent Form) can be written in vector notation as
+```math
+\oint_C \mathbf{F}\cdot d\mathbf{r}=\oint_C \mathbf{F}\cdot\mathbf{T} ds
+=\iint_R (\text{curl }\mathbf{F})\cdot \mathbf{k} dA
+```
+that is, the line integral of the tangential component of ``\mathbf{F}`` is the double integral of the normal component of ``\text{curl }\mathbf{F}``.
+
+We give now Green's theorem (normal form)
+```math
+\begin{array}{lcl}
+\oint_C \mathbf{F}\cdot d\mathbf{r}&=&\oint_C \mathbf{F}\cdot\mathbf{n} ds\\
+&=&\oint_C Pdy - Qdx \\
+&=&\iint_R \left[\frac{\partial P}{\partial x}-\left(
+-\frac{\partial Q}{\partial y}
+\right)\right] dA\\
+&=&\iint_R \left[\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}\right] dA\\
+&=&\iint_R (\text{div }\mathbf{F}) dA
+\end{array}
+```
+"""
+
+# ╔═╡ 05359c98-79e7-4c57-be02-eeda4e63d171
+md"""
+__Theorem__ (*Divergence Theorem*)
+
+Let ``D`` be a closed and bounded region in 3-space with a piecewise-smooth boundary `S` that is oriented outward. Let 
+```math
+\mathbf{F}(x, y, z) = P(x, y, z) \mathbf{i} + Q(x, y, z) \mathbf{j} + R(x, y, z) \mathbf{k}
+```
+be a vector field for which ``P``, ``Q``, and ``R`` are continuous and have continuous first partial derivatives in a region of 3-space containing ``D``. Then
+```math
+\iint_S (\mathbf{F}\cdot n) dS = \iiint_D \text{div } \mathbf{F} dV.
+```
+"""
+
+# ╔═╡ cff2af83-26f1-4cc7-b1c6-d0d9617496ad
+md"""
+__EXAMPLE__ (Verifying Divergence Theorem)
+
+Let ``D`` be the region bounded by the hemisphere 
+```math
+x^2 + y^2 + (z - 1)^2 = 9, \quad 1 \leq z \leq 4, 
+```
+and the plane ``z = 1``. Verify the divergence theorem if 
+```math
+\mathbf{F} = x \mathbf{i} + y \mathbf{j} + (z - 1) \mathbf{k}.
+```
+"""
+
+# ╔═╡ 59058a3f-6571-4090-90bf-b2cbac2dc709
+md"""
+__EXAMPLE__ (Using Divergence Theorem)
+
+If 
+```math
+\mathbf{F} = xy \mathbf{i} + y^2z \mathbf{j} + z^3 \mathbf{k},
+``` 
+evaluate 
+```math
+\iint_S (F ⋅ n) dS,
+``` 
+where ``S`` is the unit cube defined by 
+```math
+0 \leq x \leq 1,\quad 0 \leq y \leq 1,\quad  0 \leq z \leq 1.
+```
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -2499,8 +2578,13 @@ version = "0.9.1+5"
 # ╟─81441e8f-253c-44a3-b160-c0ac350791ae
 # ╟─ea174feb-97f8-497d-8a47-2fcdfeef29c8
 # ╟─47751cc9-f4e0-400e-8b6e-5c37c954ce96
+# ╟─a89ccf32-03b9-45c3-be77-7029ee8fdfee
 # ╟─a0d30cd9-2fbf-45be-b20d-da3619755922
 # ╟─b3f1155f-fc04-4a35-ab00-d9f7851c5b12
+# ╟─2111a86d-051a-406f-9cf5-934f4f35e2c3
+# ╟─05359c98-79e7-4c57-be02-eeda4e63d171
+# ╟─cff2af83-26f1-4cc7-b1c6-d0d9617496ad
+# ╟─59058a3f-6571-4090-90bf-b2cbac2dc709
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
