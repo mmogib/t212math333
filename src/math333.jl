@@ -1204,7 +1204,7 @@ __EXAMPLE__ (Verifying Divergence Theorem)
 
 Let ``D`` be the region bounded by the hemisphere 
 ```math
-x^2 + y^2 + (z - 1)^2 = 9, \quad 1 \leq z \leq 4, 
+x^2 + y^{\small 2} + (z - 1)^2 = 9, \quad 1 \leq z \leq 4, 
 ```
 and the plane ``z = 1``. Verify the divergence theorem if 
 ```math
@@ -1229,6 +1229,207 @@ where ``S`` is the unit cube defined by
 0 \leq x \leq 1,\quad 0 \leq y \leq 1,\quad  0 \leq z \leq 1.
 ```
 """
+
+# ╔═╡ 0cf4ab34-6479-43ba-aed4-c300ad7cf8a4
+md"""
+## 4.1 Definition of the Laplace Transform
+
+__Definition__ (*Laplace Transform*)
+
+Let ``f`` be a function defined for ``t \ge 0``. Then the integral
+```math
+\mathcal{L}\{f(t)\}=\int_0^{\infty}e^{-st}f(t) dt 
+```
+is said to be the __Laplace transform__ of ``f``, provided the integral converges.
+
+__Notation__
+
+```math
+\mathcal{L}\{f (t)\} = F (s),\quad \mathcal{L}\{g(t)\} = G(s),\quad \mathcal{L}\{y(t)\} = Y(s), \quad \text{and} \quad \mathcal{L}\{H(t)\} = h(s).
+```
+"""
+
+# ╔═╡ 7fb106db-664f-4139-9d29-96cd855a0605
+md"""
+__Examples__
+
+Evaluate
+
+1. ``\mathcal{L}\{1\}``.
+1. ``\mathcal{L}\{t\}``.
+1. ``\mathcal{L}\{e^{-3t}\}``.
+1. ``\mathcal{L}\{\sin(2t)\}``.
+
+
+
+"""
+
+# ╔═╡ bfdd5cc2-8da9-4530-b44a-b2b45ffa119b
+md"""
+__``\mathcal{L}`` is a Linear Transform__ For a sum of functions, we can write
+```math
+\int_0^{\infty} e^{-st}\left[\alpha f(t)+\beta g(t)\right] dt = \alpha \int_0^{\infty} e^{-st} f(t)dt +\beta \int_0^{\infty} e^{-st} g(t) dt
+```
+whenever both integrals converge for ``s > c``. Hence it follows that
+```math
+\mathcal{L}\{\alpha f(t) + \beta g(t)\} = \alpha \mathcal{L}\{ f (t)\} + \beta\mathcal{L}\{g(t)\} = \alpha F (s) + \beta G(s).
+```
+Because of this property, ``\mathcal{L}`` is said to be a __linear transform__. 
+
+"""
+
+# ╔═╡ 776b5a94-b578-4fbd-8645-c5af41371b0a
+md"""
+__Theorem__ (*Transforms of Some Basic Functions*)
+```math
+\begin{array}{llcl}
+\textbf{(a)} & \mathcal{L}\{1\} &=& \frac{1}{s}\\
+\textbf{(b)} & \mathcal{L}\{t^n\} &=& \frac{n!}{s^{n+1}},\quad n=1,2,3,\cdots\\
+\textbf{(c)} & \mathcal{L}\{e^{at}\} &=& \frac{1}{s-a}\\
+\textbf{(d)} & \mathcal{L}\{\sin kt\} &=& \frac{k}{s^2+k^2}\\
+\textbf{(e)} & \mathcal{L}\{\cos kt\} &=& \frac{s}{s^2+k^2}\\
+\textbf{(f)} & \mathcal{L}\{\sinh kt\} &=& \frac{k}{s^2-k^2}\\
+\textbf{(g)} & \mathcal{L}\{\cosh kt\} &=& \frac{s}{s^2-k^2}\\
+\end{array}
+```
+"""
+
+# ╔═╡ e39cb5f0-7110-4e98-af12-ed35a7b80f81
+md"""
+### Sufficient Conditions for Existence of ``\mathcal{L}\{ f (t )\}`` 
+
+__Definition__ (*Exponential Order*)
+
+A function ``f`` is said to be of __exponential order__ if there exist constants ``c, M > 0``, and ``T > 0`` such that 
+```math
+| f (t)| \leq Me^{ct} \quad \text{for all}\quad t > T.
+```
+
+__Theorem__ (*Sufficient Conditions for Existence*)
+
+If ``f(t)`` is piecewise continuous on the interval ``[0, \infty)`` and of exponential order, then ``\mathcal{L}\{ f (t)\}`` exists for ``s > c``.
+"""
+
+# ╔═╡ 364a5da1-fb7f-4878-98b3-318935195882
+md"""
+__EXAMPLE__
+
+Evaluate ``\mathcal{L}\{ f (t)\}`` for 
+```math
+f(t) =\left\{\begin{array}{lcl} 
+0, &\text{  }&0 \leq t < 3 \\
+2, &\text{  }& t \ge 3
+\end{array}
+\right.
+```
+"""
+
+
+# ╔═╡ 86bf7675-87f8-4b4a-ba4d-99c3ba88c02e
+md"""
+## 4.2 The Inverse Transform and Transforms of Derivatives
+If ``F(s)`` represents the __Laplace transform__ of a function ``f(t)``, 
+that is, ``\mathcal{L}\{ f (t)\} = F (s)``, we then say ``f(t)`` is the __inverse Laplace transform__ of ``F(s)`` and write
+```math
+f(t) = \mathcal{L}^{-1}\{F(s)\}.
+```
+
+__Some Inverse Transforms__
+
+```math
+\begin{array}{lcl}
+1 &=& \mathcal{L}^{-1}\left\{\frac{1}{s}\right\} \\
+t^n &=& \mathcal{L}^{-1}\left\{\frac{n!}{s^{n+1}}\right\}, \quad n=1,2,3,\cdots \\
+e^{at} &=& \mathcal{L}^{-1}\left\{\frac{1}{s-a}\right\} \\
+\sin kt &=& \mathcal{L}^{-1}\left\{\frac{k}{s^2+k^2}\right\} \\
+\cos kt &=& \mathcal{L}^{-1}\left\{\frac{s}{s^2+k^2}\right\} \\
+\sinh kt &=& \mathcal{L}^{-1}\left\{\frac{k}{s^2-k^2}\right\} \\
+\cosh kt &=& \mathcal{L}^{-1}\left\{\frac{s}{s^2-k^2}\right\} \\
+\end{array}
+```
+"""
+
+# ╔═╡ b71ec033-596d-4b1a-bfb1-aeb6e5e21914
+md"""
+Examples:
+Evaluate
+- ``\mathcal{L}^{-1}\left\{\frac{1}{s^5}\right\}``
+- ``\mathcal{L}^{-1}\left\{\frac{1}{s^2+7}\right\}``
+"""
+
+# ╔═╡ e80855f9-d666-46cc-a96d-49fada0341cb
+md"""
+### ``\mathcal{L}^{-1}`` is a Linear Transform
+
+```math
+\mathcal{L}^{-1}\left\{\alpha F(s) +\beta G(s)\right\} =
+\alpha \mathcal{L}^{-1}\left\{F(s)\right\} + \beta \mathcal{L}^{-1}\left\{G(s)\right\} 
+```
+
+"""
+
+# ╔═╡ 9c5f7821-d77f-40ae-bcc9-e558727c034f
+md"""
+__Example__
+
+Evaluate 
+```math
+\begin{array}{ll}
+\text{✏}\quad &  \mathcal{L}^{-1}\left\{\frac{-2s+6}{s^2+4}\right\} \\
+\text{✏}\quad & \mathcal{L}^{-1}\left\{\frac{s^2+6s+9}{(s-1)(s-2)(s+4)}\right\} 
+\end{array}
+```
+
+"""
+
+# ╔═╡ c41fae51-0d1b-4470-a2d9-507609b485f6
+md"""
+### Transforms of Derivatives
+__Theorem__ (*Transform of a Derivative*)
+
+If ``f, f', \cdots , f^{(n-1)}`` are continuous on ``[0, \infty)`` and are of exponential order and if ``f^{(n)}(t)`` is piecewise continuous on ``[0, \infty)``, then
+```math
+\mathcal{L}\{f^{(n)}(t)\} = s^n F(s) - s^{n-1}f(0) - s^{n-2} f'(0) - \cdots - f^{(n-1)}(0),
+```
+where ``F(s) = \mathcal{L}\{f (t)\}``.
+"""
+
+# ╔═╡ 295399f1-14b3-4cf4-83ab-349a92600337
+HTML("""<h3>Solving Linear ODEs</h3>
+<div style="color:darkblue;">The Laplace transform of a linear differential equation with constant coefficients becomes an algebraic equation in """, "Y(s)", """</div>
+""")
+
+# ╔═╡ 7b5c964d-c364-46b2-ab08-c817fb0bb08e
+md"""
+__EXAMPLEs__
+
+- Use the Laplace transform to solve the initial-value problem
+```math
+\frac{dy}{dx} + 3y = 13\sin 2t, \quad y(0)=6
+```
+- Solve 
+```math 
+y''- 3y' + 2y = e^{-4t},\quad  y(0) =1,\quad y'(0) = 5.
+```
+"""
+
+# ╔═╡ 3307e144-c20f-41a6-bba4-25b899079780
+md"""
+__Theorem__ (*Behavior of ``F(s)`` as ``s \to \infty``*)
+
+If ``f`` is piecewise continuous on ``[0, \infty)`` and of exponential order, then 
+```math
+\lim_{s\to \infty} \mathcal{L}\{ f (t)\} = 0.
+```
+"""
+
+# ╔═╡ 0c20d396-1a35-4aef-8c1b-866c9496b4af
+begin
+	t, s = symbols("t, s", real=true)
+	Lp(f) = integrate(exp(-s*t)*f,(t,0,oo))
+	Lp(sin(t))
+	html""
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2585,6 +2786,21 @@ version = "0.9.1+5"
 # ╟─05359c98-79e7-4c57-be02-eeda4e63d171
 # ╟─cff2af83-26f1-4cc7-b1c6-d0d9617496ad
 # ╟─59058a3f-6571-4090-90bf-b2cbac2dc709
+# ╟─0cf4ab34-6479-43ba-aed4-c300ad7cf8a4
+# ╟─7fb106db-664f-4139-9d29-96cd855a0605
+# ╟─bfdd5cc2-8da9-4530-b44a-b2b45ffa119b
+# ╟─776b5a94-b578-4fbd-8645-c5af41371b0a
+# ╟─e39cb5f0-7110-4e98-af12-ed35a7b80f81
+# ╟─364a5da1-fb7f-4878-98b3-318935195882
+# ╟─86bf7675-87f8-4b4a-ba4d-99c3ba88c02e
+# ╟─b71ec033-596d-4b1a-bfb1-aeb6e5e21914
+# ╟─e80855f9-d666-46cc-a96d-49fada0341cb
+# ╟─9c5f7821-d77f-40ae-bcc9-e558727c034f
+# ╟─c41fae51-0d1b-4470-a2d9-507609b485f6
+# ╟─295399f1-14b3-4cf4-83ab-349a92600337
+# ╟─7b5c964d-c364-46b2-ab08-c817fb0bb08e
+# ╠═3307e144-c20f-41a6-bba4-25b899079780
+# ╟─0c20d396-1a35-4aef-8c1b-866c9496b4af
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
