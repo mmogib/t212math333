@@ -1405,7 +1405,7 @@ __EXAMPLEs__
 
 - Use the Laplace transform to solve the initial-value problem
 ```math
-\frac{dy}{dx} + 3y = 13\sin 2t, \quad y(0)=6
+\frac{dy}{dt} + 3y = 13\sin 2t, \quad y(0)=6
 ```
 - Solve 
 ```math 
@@ -1421,6 +1421,257 @@ If ``f`` is piecewise continuous on ``[0, \infty)`` and of exponential order, th
 ```math
 \lim_{s\to \infty} \mathcal{L}\{ f (t)\} = 0.
 ```
+"""
+
+# ╔═╡ 0f1bec4d-2786-41c1-942b-18e3fd23b5f3
+md"""
+## 4.3 Translation Theorems
+
+### Translation on the s-axis
+
+__Theorem__ (*First Translation Theorem*)
+
+If ``\mathcal{L}\{ f (t)\} = F(s)`` and ``a`` is any real number, then
+```math
+\mathcal{L}\{e^{at} f (t)\} = F(s - a).
+```
+
+__Example__ Evaluate
+* ``\mathcal{L}\{e^{5t}t^3\}``.
+* ``\mathcal{L}\{e^{-2t}\cos 4t\}``.
+
+__Note__ (Inverse Form)
+```math
+\mathcal{L^{-1}}\{F(s-a)\} = \mathcal{L^{-1}}\{\left. F(s)\right|_{s\to s-a}\} = e^{at}f(t).
+```
+
+__Example__ Evaluate
+* ``\mathcal{L^{-1}}\left\{\frac{2s+5}{(s-3)^2}\right\}``.
+* ``\mathcal{L^{-1}}\left\{\frac{s/2 + 5/3}{s^2+4s+6}\right\}``.
+"""
+
+# ╔═╡ 74e5029a-b5f9-4694-a620-97853bbdfb85
+md"""
+__Example__ Solve
+```math
+y'' - 6y' +9y = t^2e^{3t},\quad y(0)=2, \quad y'(0)=17.
+```
+
+"""
+
+# ╔═╡ 20aa267a-555b-43fb-9675-2f5e0dcfc789
+begin
+	untfn(a) = t -> t>=a ? 1 : 0
+	xunts1 = 0:0.01:0.99
+	xunts2 = 1:0.1:2
+	untplt = plot(xunts1,untfn(1).(xunts1); frame_style=:origin, 
+		ylimits=(-0.5,1.5),xlimits=(0,2), xticks=(1:4,[L""]),c=:blue)
+	plot!(untplt,xunts2,untfn(1).(xunts2), c=:blue)
+	scatter!(untplt,[1],[1],c=:blue)
+	scatter!(untplt,[1],[0],c=:white)
+	annotate!(untplt,
+		[(2,0.1,L"t"), 
+		 (0.06,1.4,L"\mathcal{U}"),
+		 (1,-0.12,L"a")
+			])
+	
+md"""
+### Translation on the t-axis
+__Definition__ (*Unit Step Function* or *Heaviside function*)
+
+The __unit step function__ (__Heaviside function__) ``\mathcal{U}(t - a)`` is defined to be
+```math
+\mathcal{U}(t - a) = \left\{\begin{array}{ll}
+0,& 0 \leq t < a \\
+1,& t \geq a.
+\end{array}\right.
+```
+$untplt
+"""
+end
+
+# ╔═╡ 7252283a-db58-4bf5-a64d-7ee78cb47df7
+md"""
+The __unit step function__ is used to
+
+⚫ __turn off__ a portion of a function example
+```math
+f(t) = (2t-3)\mathcal{U}(t-1)
+```
+⚫ __write piecewise-defined functions in a compact form__, for example
+```math
+f(t) = \left\{\begin{array}{lr}
+g(t), & 0\leq t <a \\
+h(t), & t\geq a
+\end{array}\right.
+``` 
+is written as
+```math
+f(t) = g(t)-g(t)\mathcal{U}(t-a) + h(t)\mathcal{U}(t-a)
+```
+__Example__ 
+Express 
+```math
+f(t) = \left\{\begin{array}{lr}20t, & 0\leq t<5 \\ 0, & t\geq 5\end{array}\right.
+```
+in terms of unit step functions and graph it.
+"""
+
+# ╔═╡ 026fd833-7c86-4659-bb5b-c8fd90176599
+md"""
+__Remark__
+- For a general function ``y=f(t)`` defined on ``t\geq 0``, consider
+```math
+f(t-a)\mathcal{U}(t-a) = \left\{\begin{array}{lr}0, & 0\leq t<a \\ f(t-a), & t\geq a\end{array}\right.
+```
+coincides with the graph of ``y = f (t - a)`` for ``t \geq a`` which is the entire graph of ``y = f (t), t \geq 0``, shifted ``a`` units to the right on the ``t-``axis but is identically zero for ``0 \leq t < a``
+
+__Theorem__ (*Second Translation Theorem*)
+If ``a > 0``, then
+```math
+\mathcal{L}\{ f (t - a)\mathcal{U}(t - a)\} = e^{-as} \mathcal{L}\{ f (t)\}.
+```
+
+__Inverse Form__ If ``f(t) =\mathcal{L^{-1}}\{F(s)\}``, and ``a>0``, then
+```math
+\mathcal{L^{-1}}\{e^{-as}F(s)\} = f(t-a)\mathcal{U}(t-a)
+```
+
+__Remark__
+- Note that 
+```math
+\mathcal{L}\{ \mathcal{U}(t - a)\} = \frac{e^{-as}}{s}.
+```
+- Alternative form of the theorem
+```math
+\mathcal{L}\{ f (t)\mathcal{U}(t - a)\} = e^{-as} \mathcal{L}\{ f (t+a)\}
+```
+"""
+
+# ╔═╡ 3936a1e4-0d45-483c-87ac-8dcb1189fdce
+md"""
+__Example__ 
+Find the Laplace transform of the function
+```math
+f (t ) = 2 - 3\mathcal{U}(t - 2) + \mathcal{U}(t - 3)
+```
+"""
+
+# ╔═╡ 36a950bb-c3f9-40d2-be37-5f35c7ccf7a6
+md"""
+__Example__ Evaluate
+
+- ``\mathcal{L^{-1}}\left\{\frac{s}{s^2+9}e^{-\pi{s\over 2}} \right\}``
+- ``\mathcal{L}\{\cos t \;\; \mathcal{U}(t-\pi)\}``
+
+"""
+
+# ╔═╡ e58b5133-a533-4453-8ee9-72dc1c52ca8e
+md"""
+__Example__
+Solve 
+```math
+y'+y = f(t), \quad y(0)=5, \quad \text{where} \quad 
+f(t) =\left\{
+\begin{array}{lr}
+0, & 0\leq t< \pi \\
+3\cos t, & t\geq \pi 
+\end{array}
+\right.
+```
+"""
+
+# ╔═╡ 989fcae3-2362-494a-ac65-35898b113a7d
+md"""
+## 4.4 Additional Operational Properties
+
+### Derivatives of Transforms
+
+__Theorem__ (*Derivatives of Transforms*)
+
+If ``F(s)=\mathcal{L}\{ f (t)\}`` and ``n = 1, 2, 3, \cdots``, then
+```math
+\mathcal{L}\{t^n f(t)\} =(-1)^n \frac{d^n}{ds^n} F(s).
+```
+
+---
+__Example__
+
+Evaluate (a) ``\mathcal{L}\{t \sin kt\}``.  (b) ``\mathcal{L}\{t e^{3t}\}`` .
+"""
+
+# ╔═╡ 058cb303-b23b-46b2-9804-8eaf8979ce8f
+md"""
+---
+__EXAMPLE__ 
+Solve the Initial-Value Problem
+```math
+x''+ 16x = \cos 4t,\quad x(0) = 0, \quad x'(0) = 1
+```
+
+"""
+
+# ╔═╡ 2ae95cfb-67d2-4752-8080-f0503b2ba692
+md"""
+
+### Transforms of Integrals
+#### Convolution
+If functions ``f`` and ``g`` are piecewise continuous on the interval ``[0, \infty)``, then the __convolution of ``f`` and ``g``__, denoted by the symbol ``f * g``, is a function defined by the integral
+```math
+f * g = \int_0^t f(\tau)g(t-\tau) d\tau.
+```
+
+__Remark__
+- ``f * g = g * f``. 
+---
+__EXAMPLE__ (*Convolution of Two Functions*)
+
+Evaluate 
+
+(a) ``e^t * \sin t``     
+
+(b) ``\mathcal{L}\{e^t*\sin t\}``.
+"""
+
+# ╔═╡ 50a3cc1a-9c5e-4aef-832e-b8903bd8df86
+md"""
+__Theorem__ (*Convolution Theorem*)
+
+If ``f(t)`` and ``g(t)`` are piecewise continuous on ``[0, \infty)`` and of exponential order, then
+```math
+\mathcal{L}\{ f * g\} = \mathcal{L}\{ f (t)\}  \mathcal{L}\{g(t)\} = F(s) G(s).
+```
+"""
+
+# ╔═╡ 58793756-44e7-408c-ad95-7db88e713d9e
+md"""
+__Inverse Form of Theorem__
+```math
+\mathcal{L^{-1}}\{F(s)G(s)\} = f*g
+```
+
+"""
+
+# ╔═╡ bfa659e2-4d24-4cc5-8574-5751626cbf98
+md"""
+---
+__Example__ Evaluate
+
+```math
+\mathcal{L}\left\{\int_0^t e^{\tau}\sin(t-\tau)d\tau\right\}
+```
+
+"""
+
+# ╔═╡ 6d6c04b6-f45b-4975-a9a1-83002520a848
+md"""
+---
+__Example__ Evaluate
+
+```math
+\mathcal{L^{-1}}\left\{\frac{1}{(s^2+k^2)^2}\right\}
+```
+
 """
 
 # ╔═╡ 0c20d396-1a35-4aef-8c1b-866c9496b4af
@@ -2799,7 +3050,22 @@ version = "0.9.1+5"
 # ╟─c41fae51-0d1b-4470-a2d9-507609b485f6
 # ╟─295399f1-14b3-4cf4-83ab-349a92600337
 # ╟─7b5c964d-c364-46b2-ab08-c817fb0bb08e
-# ╠═3307e144-c20f-41a6-bba4-25b899079780
+# ╟─3307e144-c20f-41a6-bba4-25b899079780
+# ╟─0f1bec4d-2786-41c1-942b-18e3fd23b5f3
+# ╟─74e5029a-b5f9-4694-a620-97853bbdfb85
+# ╟─20aa267a-555b-43fb-9675-2f5e0dcfc789
+# ╟─7252283a-db58-4bf5-a64d-7ee78cb47df7
+# ╟─026fd833-7c86-4659-bb5b-c8fd90176599
+# ╟─3936a1e4-0d45-483c-87ac-8dcb1189fdce
+# ╟─36a950bb-c3f9-40d2-be37-5f35c7ccf7a6
+# ╟─e58b5133-a533-4453-8ee9-72dc1c52ca8e
+# ╟─989fcae3-2362-494a-ac65-35898b113a7d
+# ╟─058cb303-b23b-46b2-9804-8eaf8979ce8f
+# ╟─2ae95cfb-67d2-4752-8080-f0503b2ba692
+# ╟─50a3cc1a-9c5e-4aef-832e-b8903bd8df86
+# ╟─58793756-44e7-408c-ad95-7db88e713d9e
+# ╟─bfa659e2-4d24-4cc5-8574-5751626cbf98
+# ╟─6d6c04b6-f45b-4975-a9a1-83002520a848
 # ╟─0c20d396-1a35-4aef-8c1b-866c9496b4af
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
