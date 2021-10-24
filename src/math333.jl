@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.0
+# v0.16.4
 
 using Markdown
 using InteractiveUtils
@@ -1674,6 +1674,135 @@ __Example__ Evaluate
 
 """
 
+# ╔═╡ c1dd1cad-d99e-449a-baeb-e7913af59c53
+md"""
+__Transform of an Integral__
+```math
+\mathcal{L}\left\{\int_0^t f(\tau)d\tau\right\} =\frac{F(s)}{s}
+```
+Therefore
+```math
+\int_0^t f(\tau)d\tau =\mathcal{L^{-1}}\left\{\frac{F(s)}{s}\right\}
+```
+
+"""
+
+# ╔═╡ 50341107-a3df-4d57-952f-6d19baa47a37
+md"""
+__Example__ Find
+```math
+\mathcal{L^{-1}}\left\{\frac{1}{s^2(s^2+1)}\right\}
+```
+
+"""
+
+# ╔═╡ 6ef67fa7-c4c2-49ee-8bc9-9906583e930c
+md"""
+__Volterra Integral Equation__
+
+We solve a __Volterra integral equation__ for ``f(t)``,
+```math
+f(t) = g(t) + \int^t_0 f (\tau) h(t - \tau) d\tau. 
+```
+The functions ``g(t)`` and ``h(t)`` are known
+
+__Eample__
+Solve
+```math
+f(t) = 3t^2 -e^{-t} -\int^t_0 f (\tau) e^{t - \tau} d\tau. 
+```
+"""
+
+
+# ╔═╡ e57eea5c-21ae-4127-a4bb-bb99e04f0dd8
+md"""
+### Transform of a Periodic Function
+__Theorem__ (*Transform of a Periodic Function*)
+
+If ``f(t)`` is piecewise continuous on ``[0, \infty)``, of exponential order, and periodic with period ``T``, then
+```math
+\mathcal{L}\{f(t)\} = \frac{1}{1-e^{-sT}} \int^T_0 e^{-st}f(t) dt
+```
+"""
+
+# ╔═╡ ae54d385-6f6a-40b8-8bbf-e11e9173dce0
+begin
+	sec44ex8=Resource("https://www.dropbox.com/s/fzgzuo7food7w5v/sec4.41.png?raw=1")
+	md"""
+	__Example__ Find the Laplace transform of the periodic function shown
+	$sec44ex8
+	"""
+end
+
+# ╔═╡ 4ca84dd7-dfe9-4caf-88b8-ba5090881aa5
+md"""
+## 4.5 The Dirac Delta Function
+
+__Unit Impulse__
+```math
+\delta_a(t-t_0) = \left\{
+\begin{array}{lr}
+0, & 0\leq t\leq t_0-a \\
+\frac{1}{2a}, & t_0-a\leq t\leq t_0+a \\
+0, & 0\leq t\leq t_0+a \\
+\end{array}
+\right.
+```
+where ``a>0, t_0>0``.
+
+__Note__
+```math
+\int_0^{\infty}\delta_a(t-t_0) =1
+```
+
+"""
+
+# ╔═╡ 2a1668b8-060b-4d71-9a9f-8224d3257e87
+md"""
+__The Dirac Delta Function__
+```math
+\delta(t-t_0)=\lim_{a\to 0}\delta_a(t-t_0)
+```
+This expression is characterized by
+```math
+\text{(i)} \quad \delta(t-t_0)=\left\{
+\begin{array}{lc}
+\infty, & t=t_0 \\
+0, & t\not=t_0
+\end{array}
+\right.
+\quad \text{ and (ii)} \quad \int_0^{\infty} \delta(t-t_0)dt =1. 
+```
+"""
+
+# ╔═╡ 5d46eee5-8e8a-417a-b746-d0a725212bd4
+md"""
+__Theorem__ (*Transform of the Dirac Delta Function*)
+
+For ``t_0>0``, 
+```math
+\mathcal{L}\{\delta(t - t_0)\} = e^{-st_0}.
+```
+When ``t_0=1``
+```math
+\mathcal{L}\{\delta(t)\} = 1.
+```
+
+"""
+
+# ╔═╡ 398893ae-5701-4986-a623-4b3e1003bd86
+md"""
+__Example__
+
+Solve 
+```math
+y'' + y = 4 \delta(t-2\pi) \quad \text {subject to}
+```
+(a) ``y(0) = 1, y(0) = 0`` 
+
+(b) ``y(0) = 0, y(0) = 0``.
+"""
+
 # ╔═╡ 0c20d396-1a35-4aef-8c1b-866c9496b4af
 begin
 	t, s = symbols("t, s", real=true)
@@ -3066,6 +3195,15 @@ version = "0.9.1+5"
 # ╟─58793756-44e7-408c-ad95-7db88e713d9e
 # ╟─bfa659e2-4d24-4cc5-8574-5751626cbf98
 # ╟─6d6c04b6-f45b-4975-a9a1-83002520a848
+# ╟─c1dd1cad-d99e-449a-baeb-e7913af59c53
+# ╟─50341107-a3df-4d57-952f-6d19baa47a37
+# ╟─6ef67fa7-c4c2-49ee-8bc9-9906583e930c
+# ╟─e57eea5c-21ae-4127-a4bb-bb99e04f0dd8
+# ╟─ae54d385-6f6a-40b8-8bbf-e11e9173dce0
+# ╟─4ca84dd7-dfe9-4caf-88b8-ba5090881aa5
+# ╟─2a1668b8-060b-4d71-9a9f-8224d3257e87
+# ╟─5d46eee5-8e8a-417a-b746-d0a725212bd4
+# ╟─398893ae-5701-4986-a623-4b3e1003bd86
 # ╟─0c20d396-1a35-4aef-8c1b-866c9496b4af
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
