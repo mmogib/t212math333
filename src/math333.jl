@@ -1742,9 +1742,9 @@ __Unit Impulse__
 ```math
 \delta_a(t-t_0) = \left\{
 \begin{array}{lr}
-0, & 0\leq t\leq t_0-a \\
-\frac{1}{2a}, & t_0-a\leq t\leq t_0+a \\
-0, & 0\leq t\leq t_0+a \\
+0, & 0\leq t< t_0-a \\
+\frac{1}{2a}, & t_0-a\leq t< t_0+a \\
+0, & t\geq t_0+a \\
 \end{array}
 \right.
 ```
@@ -1801,6 +1801,123 @@ y'' + y = 4 \delta(t-2\pi) \quad \text {subject to}
 (a) ``y(0) = 1, y(0) = 0`` 
 
 (b) ``y(0) = 0, y(0) = 0``.
+"""
+
+# ╔═╡ 57c567a5-d43f-4a53-a142-e20e55218070
+md"""
+## 12.1 Orthogonal Functions
+
+###  Inner Product
+
+The inner product ``(u, v)`` possesses the following properties:
+
+(i) ``(u, v) = (v, u)``
+
+(ii) ``(ku, v) = k(u, v)``, ``k`` a scalar
+
+(iii) ``(u, u) = 0`` if ``u = 0`` and ``(u, u) > 0`` if ``u \neq 0``
+
+(iv) ``(u + v, w) = (u, w) + (v, w)``
+
+__Definition__ (*Inner Product of Functions*)
+
+The inner product of two functions ``f_1`` and ``f_2`` on an interval ``[a, b]`` is the number
+```math
+(f_1, f_2) = \int_a^b f_1(x) f_2(x ) dx
+```
+"""
+
+# ╔═╡ 1baa8d2f-139a-4d40-97a8-58edac1eac48
+md"""
+### Orthogonal Functions
+
+__Definition__ (*Orthogonal Functions*)
+
+Two functions ``f_1`` and ``f_2`` are said to be orthogonal on an interval ``[a, b]`` if
+```math
+(f_1, f_2) = 0.
+```
+
+__EXAMPLE__ The functions ``f_1(x) = x^2`` and ``f_2(x) = x^3``
+are orthogonal on the interval ``[-1, 1]``. 
+"""
+
+# ╔═╡ 5730bedd-e68f-4861-a43f-cd53e6912a38
+md"""
+### Orthogonal Sets 
+__Definition__ (*Orthogonal Set*)
+
+A set of real-valued functions ``\{f_0(x), f_1(x), f_2(x), …\}`` is said to be __orthogonal__ on an interval ``[a, b]`` if
+```math
+(f_m, f_n)= 0, m \neq n.
+```
+"""
+
+# ╔═╡ 83a8a7c6-76ae-47c5-8eb0-041fc8a8bd49
+md"""
+### Orthonormal Sets
+The __norm__ of a function ``\phi`` on ``[a,b]`` is defined as
+```math
+\|\phi\| =\sqrt{(\phi,\phi)} = \sqrt{\int_a^b\phi^2(x) dx}
+```
+
+__Definition__ 
+
+If ``\{\phi_n\}`` is an orthogonal set of functions on the interval ``[a, b]`` with the property that if ``\|\phi\|=1`` for ``n = 0, 1, 2, …,`` then ``\{\phi_n\}`` is said to be an __orthonormal set__ on the interval.
+
+"""
+
+# ╔═╡ 9d2ff5ff-d92b-429f-b900-b8aa52f82693
+md"""
+__EXAMPLE__
+
+Consider the set ``\{1, \cos x, \cos 2x, …\}`` on the interval ``[-\pi, \pi]``.
+
+(a) Show that this set is orthogonal on the interval ``[-\pi, \pi]``
+
+(b) Find the norms
+
+
+"""
+
+# ╔═╡ dad1d92e-97dc-46c2-ab45-2436c459b972
+md"""
+### Orthogonal Series Expansion
+Suppose ``\{\phi_n\}`` is an infinite orthogonal set of functions on an interval ``[a, b]``. 
+
+We ask: If ``y = f (x)`` is a function defined on the interval ``[a, b]``, 
+is it possible to determine a set of coefficients ``c_n , n = 0, 1, 2, …,`` for which
+```math 
+f (x) = c_0\phi_0(x) + c_1\phi_1(x) + \cdots + c_n\phi_n(x) + \cdots?  \tag{*}
+```
+
+Indeed, 
+```math
+f(x) =\sum_{n=0}^{\infty} c_n\phi_n(x), \tag{**}
+```
+where 
+```math
+c_n = \frac{(f,\phi_n)}{\|\phi_n\|^2}.
+```
+
+__Definition__ (*Orthogonal Set/Weight Function*)
+
+A set of real-valued functions ``\{\phi_0(x), \phi_1(x), \phi_2(x), …\}`` is said to be __orthogonal with respect to a weight function__ ``w(x)`` on an interval ``[a, b]`` if
+```math
+\int^b_a w(x)\phi_m(x)\phi_n(x) dx = 0, m \neq n.
+```
+"""
+
+# ╔═╡ adb0ac47-8e74-4479-82fb-3308f801a5c7
+md"""
+
+__Remark__
+
+* The series ``(**)`` is said to be an __orthogonal series expansion__ of ``f`` or a __generalized Fourier series__.
+
+### Complete Sets 
+An orthogonal set is __complete__ if the only continuous function 
+orthogonal to each member of the set is the zero function.
 """
 
 # ╔═╡ 0c20d396-1a35-4aef-8c1b-866c9496b4af
@@ -3204,6 +3321,13 @@ version = "0.9.1+5"
 # ╟─2a1668b8-060b-4d71-9a9f-8224d3257e87
 # ╟─5d46eee5-8e8a-417a-b746-d0a725212bd4
 # ╟─398893ae-5701-4986-a623-4b3e1003bd86
+# ╟─57c567a5-d43f-4a53-a142-e20e55218070
+# ╟─1baa8d2f-139a-4d40-97a8-58edac1eac48
+# ╟─5730bedd-e68f-4861-a43f-cd53e6912a38
+# ╟─83a8a7c6-76ae-47c5-8eb0-041fc8a8bd49
+# ╟─9d2ff5ff-d92b-429f-b900-b8aa52f82693
+# ╟─dad1d92e-97dc-46c2-ab45-2436c459b972
+# ╟─adb0ac47-8e74-4479-82fb-3308f801a5c7
 # ╟─0c20d396-1a35-4aef-8c1b-866c9496b4af
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
