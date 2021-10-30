@@ -1783,7 +1783,7 @@ For ``t_0>0``,
 ```math
 \mathcal{L}\{\delta(t - t_0)\} = e^{-st_0}.
 ```
-When ``t_0=1``
+When ``t_0=0``
 ```math
 \mathcal{L}\{\delta(t)\} = 1.
 ```
@@ -1926,6 +1926,134 @@ begin
 	Lp(f) = integrate(exp(-s*t)*f,(t,0,oo))
 	Lp(sin(t))
 	html""
+end
+
+# ╔═╡ 6f9f6113-2c07-469b-9054-1f686489a42b
+md"""
+## 12.2 Fourier Series
+
+### Trigonometric Series 
+The set 
+```math
+\left\{
+1 , \cos\frac{\pi}{p}x, \cos\frac{2\pi}{p}x,\cos\frac{3\pi}{p}x,\cdots
+\sin\frac{\pi}{p}x,\sin\frac{2\pi}{p}x,\sin\frac{3\pi}{p}x,\cdots
+\right\}
+```
+is __orthogonal__ on the interval ``[-p,p]``. __CHECK__
+
+Suppose that a function ``f``, defined on ``[-p,p]``, is __expaned__ as
+```math
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n\cos\frac{n\pi}{p}
++\sum_{n=1}^{\infty}b_n\sin\frac{n\pi}{p}
+```
+Computing, we get
+```math
+a_0 =\frac{1}{p}\int_{-p}^p f(x) dx
+```
+```math
+a_n =\frac{1}{p}\int_{-p}^p f(x)\cos\frac{n\pi}{p} dx, \quad n\geq 1
+```
+```math
+b_n =\frac{1}{p}\int_{-p}^p f(x)\sin\frac{n\pi}{p} dx, \quad n\geq 1
+```
+
+__Definition__ (*Fourier Series*)
+
+
+The __Fourier series__ of a function ``f`` defined on the interval ``(-p, p)`` is given by
+```math
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n\cos\frac{n\pi}{p}
++\sum_{n=1}^{\infty}b_n\sin\frac{n\pi}{p}
+```
+where
+```math
+\begin{array}{lcl}
+a_0 &=&\frac{1}{p}\int_{-p}^p f(x) dx\\
+a_n &=&\frac{1}{p}\int_{-p}^p f(x)\cos\frac{n\pi}{p} dx, \quad n\geq 1\\
+b_n &=&\frac{1}{p}\int_{-p}^p f(x)\sin\frac{n\pi}{p} dx, \quad n\geq 1
+\end{array}
+```
+"""
+
+# ╔═╡ 14781050-38ae-4570-bc59-d50cee939e95
+md"""
+__EXAMPLE__ Expand
+```math
+f(x) = \left\{
+\begin{array}{lc}
+0, & -\pi<x<0 \\
+\pi-x, & 0\leq x<\pi \\
+\end{array}
+\right.
+```
+in a Fourier series
+"""
+
+# ╔═╡ 7590f82a-1dfd-4edb-9804-1ec5a72a4845
+md"""
+###  Convergence of a Fourier Series
+__Theorem__ (*Conditions for Convergence*)
+
+Let ``f`` and ``f'`` be piecewise continuous on the interval ``[-p, p]``; that is, let ``f`` and ``f'`` be continuous except at a finite number of points in the interval and have only finite discontinuities at these points. Then for all ``x`` in the interval ``(-p, p)`` the Fourier series of f converges to ``f(x)`` at a point 
+of continuity. At a point of discontinuity, the Fourier series converges to the average
+```math
+\frac{f(x+)+ f(x-)}{2} ,
+```
+where ``f(x+)`` and ``f(x-)`` denote the limit of ``f`` at ``x`` from the right and from the left, respectively.
+"""
+
+# ╔═╡ 42344fd4-b5f7-4677-8fca-3abf2bb264e0
+md"""
+### Periodic Extension 
+All functions in
+```math
+\left\{
+1 , \cos\frac{\pi}{p}x, \cos\frac{2\pi}{p}x,\cos\frac{3\pi}{p}x,\cdots
+\sin\frac{\pi}{p}x,\sin\frac{2\pi}{p}x,\sin\frac{3\pi}{p}x,\cdots
+\right\}
+```
+have the period ``2p`` is common.
+- We conclude that a Fourier series not only represents the function on the interval ``(-p, p)`` but also gives the __periodic extension__ of ``f`` outside this interval
+- We can now apply the previous Theorem  to the periodic extension of ``f``, or we may assume from the outset that the given function is periodic with period ``T = 2p``; that is, ``f (x + T )=f(x)``.
+
+"""
+
+# ╔═╡ 675d613c-e435-47ca-a4c5-71d55fb9a424
+md"""
+### Sequence of Partial Sums
+"""
+
+# ╔═╡ fa9eed64-941e-48b5-bb6f-f7a0d85c1f12
+begin
+	snSlider = @bind snslider Slider(1:100,show_value=true)
+	prSlider = @bind prslider Slider(1:10,show_value=false)
+	md"""
+	n = $snSlider
+	
+	 $prSlider
+	"""
+end
+
+# ╔═╡ be9459ae-26bd-47de-8801-40aa916ae1d8
+begin
+	prStr(n) = n == 1 ? "" : n 
+md"""
+interval = (- $(prStr(prslider)) π, $(prStr(prslider)) π)
+"""
+end
+
+# ╔═╡ b91f84da-f5a6-4a4a-b915-1eab8e775382
+begin
+	psn(x,n) = π/4 + ([((1-(-1)^i)/(i^2*π))cos(i*x)+(1/i)*sin(i*x) for i in 1:n-1] |> sum)
+	domn=-(prslider)*π:0.1:(prslider)*π
+	sn = psn.(domn,snslider)
+	snplt=plot(domn,sn;frame_style=:origin,xticks=:none)
+	annotate!(snplt,[(-π,-0.1,L"-\pi"),
+					 (π,-0.1,L"\pi"),
+					 (0.1,π/2,L"\frac{\pi}{4}")
+			])
+	
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -3329,6 +3457,14 @@ version = "0.9.1+5"
 # ╟─dad1d92e-97dc-46c2-ab45-2436c459b972
 # ╟─adb0ac47-8e74-4479-82fb-3308f801a5c7
 # ╟─0c20d396-1a35-4aef-8c1b-866c9496b4af
+# ╟─6f9f6113-2c07-469b-9054-1f686489a42b
+# ╟─14781050-38ae-4570-bc59-d50cee939e95
+# ╟─7590f82a-1dfd-4edb-9804-1ec5a72a4845
+# ╟─42344fd4-b5f7-4677-8fca-3abf2bb264e0
+# ╟─675d613c-e435-47ca-a4c5-71d55fb9a424
+# ╟─fa9eed64-941e-48b5-bb6f-f7a0d85c1f12
+# ╟─be9459ae-26bd-47de-8801-40aa916ae1d8
+# ╟─b91f84da-f5a6-4a4a-b915-1eab8e775382
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
