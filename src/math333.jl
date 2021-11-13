@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.16.4
+# v0.17.1
 
 using Markdown
 using InteractiveUtils
@@ -7,8 +7,9 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
 end
@@ -1920,14 +1921,6 @@ An orthogonal set is __complete__ if the only continuous function
 orthogonal to each member of the set is the zero function.
 """
 
-# ╔═╡ 0c20d396-1a35-4aef-8c1b-866c9496b4af
-begin
-	t, s = symbols("t, s", real=true)
-	Lp(f) = integrate(exp(-s*t)*f,(t,0,oo))
-	Lp(sin(t))
-	html""
-end
-
 # ╔═╡ 6f9f6113-2c07-469b-9054-1f686489a42b
 md"""
 ## 12.2 Fourier Series
@@ -2051,9 +2044,451 @@ begin
 	snplt=plot(domn,sn;frame_style=:origin,xticks=:none)
 	annotate!(snplt,[(-π,-0.1,L"-\pi"),
 					 (π,-0.1,L"\pi"),
-					 (0.1,π/2,L"\frac{\pi}{4}")
+					 (0.1,π/2,L"\frac{\pi}{2}")
 			])
 	
+end
+
+# ╔═╡ 973e80f6-1b1a-4241-8b1e-afbea8d0dd1b
+md"""
+## 12.3 Fourier Cosine and Sine Series
+__Theorem__ (*Properties of Even/Odd Functions*)
+
+- The product of two even functions is even.
+- The product of two odd functions is even.
+- The product of an even function and an odd function is odd.
+- The sum (difference) of two even functions is even.
+- The sum (difference) of two odd functions is odd.
+- If ``f`` is even, then 
+```math
+\int^a_{-a} f (x) dx = 2 \int^a_0 f (x) dx.
+```
+- If ``f`` is odd, then e
+```math
+\int^a_{-a} f (x) dx =0.
+```
+"""
+
+# ╔═╡ ba0393e3-b6aa-4850-89d9-af5dc24c0d4a
+md"""
+### Cosine and Sine Series
+
+__Definition__ (Fourier Cosine and Sine Series)
+
+``(i)`` The Fourier series of an __even__ function on the interval ``(-p, p)`` is the cosine series
+```math
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n\cos\frac{n\pi}{p}x,
+```
+where 
+```math
+\begin{array}{lclclcl}
+a_0 &=& \frac{2}{p} \int^p_0 f(x) dx &\text{,  }& a_n &=& \frac{2}{p}\int^p_0 f(x) \cos \frac{n\pi}{p} x dx. 
+\end{array}
+```
+``(ii)`` The Fourier series of an __odd__ function on the interval ``(-p, p)`` is the sine series
+```math
+f(x)=\sum_{n=1}^{\infty}b_n\sin\frac{n\pi}{p}x,
+```
+where
+```math
+\begin{array}{lcl}
+b_n &=& \frac{2}{p}\int^p_0 f(x) \sin \frac{n\pi}{p} x dx. 
+\end{array}
+```
+
+---
+"""
+
+# ╔═╡ d24a53c7-10ab-44ad-b54b-b79ab4844d59
+md"""
+__Example__
+
+Expand 
+```math
+f (x) = x,\quad -2<x<2,
+```
+in a Fourier series
+"""
+
+# ╔═╡ c687c08c-40fe-411b-81b0-2e4aed70e704
+md"""
+### Half-Range Expansions 
+In many instances we are interested in representing a function that is defined on an interval ``(0, L)``
+"""
+
+# ╔═╡ 9956ff01-8fcb-4a7e-9277-44ad290579a3
+Resource("https://www.dropbox.com/s/iqq8vyzd77d2rz3/sec123halfrange.png?raw=1")
+
+# ╔═╡ 308f4c0c-8923-4013-9b5c-dc7fac5cc96e
+md"""
+__Example__ 
+
+Expand ``f(x)=x^2, \; 0< x < L``, 
+- in a cosine series, 
+- in a sine series, 
+- in a Fourier series.
+"""
+
+# ╔═╡ 7eed8ee3-fbf0-442f-864e-5bcba2244a9b
+begin
+	sec125Intro=Resource("https://www.dropbox.com/s/lh4sm4ax8ii0kse/sec125intro.png?raw=1")
+md"""
+## 12.5 Sturm–Liouville Problem
+$sec125Intro
+"""
+end
+
+# ╔═╡ 00598371-cb24-4e2e-a905-7f05407f23f9
+md"""
+### Eigenvalues and Eigenfunctions
+Solve 
+```math
+y'' + \lambda y = 0, \quad y(0)=0,\quad y(L)=0
+```
+and 
+```math
+y'' + \lambda y = 0, \quad y'(0)=0,\quad y'(L)=0
+```
+"""
+
+# ╔═╡ adaadd66-64e5-4d31-bf98-582a84695b1a
+md"""
+### Regular Sturm–Liouville Problem
+Let ``p, q, r``, and ``r'`` be real-valued functions continuous on an interval 
+``[a, b]``, and let ``r(x)> 0`` and ``p(x)> 0`` for every ``x`` in the interval. 
+Then
+```math
+\begin{array}{lc}
+\text{Solve} & \\
+&(r(x)y')' + (q(x)+\lambda p(x))y = 0 \\
+\text{subject to} & \\
+&
+\begin{array}{lllll}
+A_1y(a) & + & B_1y'(a) &=&0\quad \text{(Cond1)}\\
+A_2y(b) & + & B_2y'(b) &=&0\quad \text{(Cond2)}\\
+\end{array}
+\end{array}
+```
+is called a __regular Sturm–Liouville problem__.
+
+__*Remarks/Terminalogy*__
+- The coefficients in the boundary conditions are assumed to be real and independent of ``\lambda``.
+- ``A_1`` and ``B_1`` are not both zero, and ``A_2`` and ``B_2`` are not both zero.
+- __homogeneous/nonhomogeneous__ boundary conditions.
+- __separated/mixed__ boundary conditions.
+
+"""
+
+# ╔═╡ 2c698191-4649-4d49-a0c5-8b937bdeff0c
+md"""
+### Properties
+__Theorem__ (*Properties of the Regular Sturm–Liouville Problem*)
+
+1. There exist an infinite number of real eigenvalues that can be arranged in increasing order ``\lambda_1<\lambda_2<\lambda_3<\cdots<\lambda_n<\cdots`` such that ``\lambda_n \to \infty`` as ``n \to \infty``.
+2. For each eigenvalue there is only one eigenfunction (except for nonzero constant multiples).
+3. Eigenfunctions corresponding to different eigenvalues are linearly independent.
+4. The set of eigenfunctions corresponding to the set of eigenvalues is orthogonal with respect to the weight function ``p(x)`` on the interval ``[a,b]``. Let ``y_m`` and ``y_n`` be eigenfunctions corresponding to eigenvalues ``\lambda_m`` and ``\lambda_n`` ,respectively. Then
+```math
+\int_a^b p(x)y_m(x)y_n(x) dx = 0,\quad \lambda_m\neq\lambda_n \quad \text{(ORTH)}.
+```
+"""
+
+# ╔═╡ 552b90df-1bb4-47bd-83a3-d8dd59bfc9b0
+md"""
+__Example__
+
+Solve the boundary-value problem
+```math
+y'' + \lambda y = 0, \quad y(0)= 0,\quad  y(1) + y'(1) = 0.
+```
+
+
+"""
+
+# ╔═╡ d639a318-4b5d-4d34-8a17-c8523434b5ee
+md"""
+### Singular Sturm–Liouville Problem
+There are several other important conditions under which we seek nontrivial solutions of the differential equation
+```math
+(r(x)y')' + (q(x)+\lambda p(x))y = 0 \tag{SLE}
+```
+- ``r(a) = 0`` and a boundary condition of the type given in (Cond2) is specified at ``x = b``;
+- ``r(b) = 0`` and a boundary condition of the type given in (Cond1) is specified at ``x = a``;
+- ``r(a)=r(b) = 0`` and no boundary condition is specified at either ``x = a`` or at ``x = b``;
+- ``r(a)=r(b) = 0`` and no boundary condition ``y(a)=y(b),y'(a)=y'(b)``.
+
+__Remarks__
+- (SLE) with the first two conditiosn is called a __singular boundary-value problem__
+- (SLE) with the last one is called __periodic boundary-value problem__.
+
+"""
+
+# ╔═╡ 21de6619-cc54-4f64-83e2-56d3c97b5f16
+md"""
+### Self-Adjoint Form
+(SLE) is the __Self-Adjoint Form__ of 
+```math
+r(x)y''+r'(x)y'+(q(x)+\lambda p(x))y = 0\tag{*}
+```
+
+__Remark__
+- __Legendre’s differential equation__ ``(1 - x^2)y''-2xy' + n(n+1)y = 0`` is exactly of the latter form. Note that we can write this as
+```math
+((1-x^2)y')' + n(n+1)y=0
+```
+- Any equation of the form 
+```math
+a(x)y'' + b(x)y' + (c(x) + \lambda d(x))y = 0
+```
+can be written in __self-adjoint__ form provide that the coefficient functions are continuous and ``a(x)\neq 0``
+
+"""
+
+# ╔═╡ cdea9ddd-c827-4ed7-be92-20cf86796e1e
+md"""
+## 2.6 Bessel and Legendre Series
+### Bessel's equation of order ``\nu``
+```math
+x^2y'' +xy' +(x^2-\nu^2)y = 0, \quad \nu\geq 0
+```
+
+"""
+
+# ╔═╡ bc58ab1e-55cc-40e5-89b6-79601f74e569
+md"""
+For any value of ``\nu`` the general solution on the interval ``(0, \infty)`` can be written as
+```math
+y = c_1J_{\nu}(x) + c_2Y_{\nu}(x)
+```
+where 
+- ``J_{\nu}(x)`` is a __Bessel Function of the First Kind__ of oredr ``\nu`` and
+```math
+J_{\nu}(x) = \sum_{n=0}^{\infty}\frac{(-1)^n}{n!\Gamma(1+\nu+n)}\left(
+\frac{x}{2}
+\right)^{2n+\nu}
+``` 
+- Note: 
+```math
+J_{-\nu}(x) = \sum_{n=0}^{\infty}\frac{(-1)^n}{n!\Gamma(1-\nu+n)}\left(
+\frac{x}{2}
+\right)^{2n-\nu}
+```
+- ``Y_{\nu}(x)`` is a __Bessel Function of the Second Kind__ of order ``\nu`` and
+```math
+Y_{\nu}(x)= \frac{J_{\nu}(x)\cos\nu\pi \;\; - \;\; J_{-\nu}(x)}{\sin\nu\pi}
+```
+- If ``\nu=m``, ``m`` is an integer, then
+```math
+Y_{m}(x) = \lim_{\nu\to m}Y_{\nu}(x)
+```
+
+"""
+
+# ╔═╡ b5505ca5-c491-4d50-8f70-d10d400fecf0
+md"""
+__Properties__ We list below a few of the more useful properties of Bessel functions of the first and second kinds of order ``m``, ``m = 0, 1, 2, \cdots ``:
+```math
+\begin{array}{rcl}
+J_{-m}(x)&=&(-1)^mJ_{m}(x) \\
+J_{m}(-x)&=&(-1)^mJ_{m}(x) \\
+J_m(0)&=&\left\{\begin{array}{ll}0,& m>0\\ 1&m=0\end{array}\right.\\
+\lim_{x\to 0+}Y_m(x)&=&-\infty \\
+\frac{d}{dx}\left[x^{-\nu}J_{\nu}(x)\right]&=& -x^{-\nu}J_{\nu+1}(x)\\
+\frac{d}{dx}\left[x^{\nu}J_{\nu}(x)\right]&=& x^{\nu}J_{\nu-1}(x)\\
+xJ_{\nu}'(x)&=& \nu J_{\nu}(x)-xJ_{\nu+1}(x)\\
+\end{array}
+```
+"""
+
+# ╔═╡ 630c1a04-5039-4876-87a3-1434bebe66e9
+md"""
+__Example:__
+Consider the __parametric Bessel differential equation__
+```math
+x^2y''+xy'+\left(\alpha^2 x^2 - n^2\right)y = 0, \quad n = 0, 1, 2, … \tag{PBDE}
+```
+The general solution is
+```math
+y = c_1J_{n}(\alpha x) + c_2Y_{n}(\alpha x)
+```
+The self-adjoint form of ``\text{(PBDE)}`` is
+```math
+\left[xy'\right]'+\left(\alpha^2x-\frac{n^2}{x}\right)y=0,
+```
+here
+```math
+r(x)=x,\quad q(x)=-n^2/x, \quad p(x)=x,\quad \lambda=\alpha^2
+```
+__Remarks:__
+* ``r(0)=0``
+* ``Y_{n}(\alpha x)`` is not bounded at ``0``
+* ``J_{n}(\alpha x)`` is bounded at ``0``. So on ``[0,b]`` the set 
+```math
+\left\{J_{n}(\alpha_i x)\right\},\quad i=1,2,3,\cdots \quad \text{ is orthogonal with respect to } p(x)=x
+```
+* The orthogonality relation is
+```math
+\int_0^bxJ_n(\alpha_ix)J_n(\alpha_jx)dx = 0, \quad \lambda_i\neq \lambda_j,
+```
+- provided that ``\alpha_i``, and hence the eigenvalues ``\lambda_i=\alpha_i^2``, ``i = 1, 2, 3, …``, are defined by means ofa boundary condition at ``x = b`` of the type
+```math
+A_2J_n(\alpha b)+B_2\alpha J'_n(\alpha b) =0
+```
+For any choice of ``A_2`` and ``B_2``, not both zero, it is known that the last equation has an infinite number of roots
+```math
+x_i=\alpha_i b.
+```
+The eigenvalues are then 
+```math
+\lambda_i = \alpha_i^2 = (x_i/b)^2.
+```
+
+
+"""
+
+# ╔═╡ 3879874e-b35d-4af9-aede-6528365f4890
+md"""
+### 12.6.1 Fourier–Bessel Series
+The orthogonal series expansion or __generalized Fourier series__ of a function ``f`` defined on the interval ``(0, b)`` in terms of this orthogonal (with respect to  ``p(x)=x``) set  
+```math
+\left\{J_{n}(\alpha_i x)\right\},\quad i=1,2,3,\cdots 
+```
+That is
+```math
+f(x)=\sum_{i=1}^{\infty}c_iJ_n(\alpha_ix),
+```
+where
+```math
+c_i = \frac{\int_0^bxJ_n(\alpha_ix)f(x)dx}{\|J_n(\alpha_ix)\|^2}
+```
+here
+```math
+\|J_n(\alpha_ix)\|^2=\int_0^bxJ_n^2(\alpha_ix)dx
+```
+This is called a __Fourier-Bessel series__
+"""
+
+# ╔═╡ e4a9fad5-1c61-4f20-ac8c-45964083c7a5
+md"""
+__Definition:__ (*Fourier–Bessel Series*)
+
+The __Fourier–Bessel series__ of a function ``f`` defined on the interval ``(0, b)`` is given by
+
+__CASE 1__:
+```math
+\begin{array}{rcl}
+f(x) &=& \sum_{i=1} c_i J_n(\alpha_i x) \\
+c_i &=& \frac{2}{b^2J^2_{n+1}(\alpha_ib)}\int_0^b xf(x)J_n(\alpha_ix)dx
+\end{array}
+```
+where ``\alpha_i`` are defined by ``J_n(\alpha b)=0``.
+
+
+__CASE 2__:
+```math
+\begin{array}{rcl}
+f(x) &=& \sum_{i=1} c_i J_n(\alpha_i x) \\
+c_i &=& \frac{2\alpha_i^2}{(\alpha_i^2b^2-n^2+h^2)J^2_{n}(\alpha_ib)}\int_0^b xf(x)J_n(\alpha_ix)dx
+\end{array}
+```
+where ``\alpha_i`` are defined by ``hJ_n(\alpha b)+\alpha b J'_n(\alpha b)=0`` (``h\geq 0``).
+
+
+
+__CASE 3__:
+```math
+\begin{array}{rcl}
+f(x) &=& c_1 + \sum_{i=2} c_i J_n(\alpha_i x) \\
+c_1 &=& \frac{2}{b^2}\int_0^b x f(x) dx,\\
+c_i &=& \frac{2}{b^2J^2_{0}(\alpha_ib)}\int_0^b xf(x)J_0(\alpha_ix)dx
+\end{array}
+```
+where ``\alpha_i`` are defined by ``J_n(\alpha b)=0``.
+
+"""
+
+# ╔═╡ eb0a78f2-4e38-4b50-ae40-723cc16ffea9
+md"""
+###  Convergence of a Fourier–Bessel Series 
+Let ``f`` and ``f'`` be piecewise continuous on the interval ``[0, b]``. Then for all ``x`` in the interval ``(0, b)``, the Fourier–Bessel series of f converges to ``f(x)`` at a point where ``f`` is continuous and to the average
+```math
+\frac{f(x+)+f(x-)}{2}
+```
+at a point where ``f`` is discontinuous. 
+"""
+
+# ╔═╡ dc539496-b56e-4366-bc4e-6e39740b44ba
+md"""
+__EXAMPLE__ Expand 
+```math
+f(x) = x,\quad  0<x< 3, 
+```
+in a Fourier–Bessel series, using Bessel functions of order one 
+that satisfy the boundary condition 
+
+1. ``J_1(3\alpha)= 0``.
+2. ``J_1(3\alpha)+\alpha J'_1(3\alpha)=0``.
+"""
+
+# ╔═╡ dc185f92-9333-46e2-9eb5-0879d13b9124
+md"""
+### 12.6.2 Fourier–Legendre Series
+The __Legendre polynomials__ ``\{P_n(x)\}, n = 0, 1, 2, …,`` is orthogonal with respect to the weight function ``p(x) = 1`` on the interval ``[-1, 1]``. 
+The first six Legendre polynomials are
+```math
+\begin{array}{rclcrcl}
+P_0(x) &=&1, &\text{    }& P_1(x)&=&x,\\
+P_2(x) &=&\frac{1}{2}(3x^2-1), &\text{    }& P_3(x)&=&\frac{1}{2}(5x^3-3x),\\
+P_4(x) &=&\frac{1}{8}(35x^4-30x^2+3), &\text{    }& P_5(x)&=&\frac{1}{8}(63x^5-70x^3+15x),\\
+\end{array}
+```
+and the square norm
+```math
+\|P_n(x)\|^2=\int_{-1}^1 P^2_n(x)dx = \frac{2}{2n+1}.
+```
+"""
+
+# ╔═╡ 7925e2bf-59e4-4c53-8349-b4022338138b
+md"""
+__Definition__ (*Fourier–Legendre Series*)
+
+The __Fourier–Legendre__ series of a function ``f`` defined on the interval ``(-1, 1)`` is given by
+```math
+f(x) = \sum_{n=0}^{\infty}c_nP_n(x),
+```
+where 
+```math
+c_n =\frac{ 2n+1}{2}\int_{-1}^1 f(x)P_n(x) dx. 
+```
+__Theorem__(*Conditions for Convergence*)
+
+Let ``f`` and ``f'`` be piecewise continuous on the interval ``[-1, 1]``. Then for all ``x`` in the interval ``(-1, 1)``, the Fourier–Legendre series of f converges to ``f(x)`` at a point where ``f`` is continuous and to the average
+```math
+\frac{f(x+)+f(x-)}{2}
+```
+at a point where ``f`` is discontinuous
+"""
+
+# ╔═╡ 45fa6519-6dac-4e6c-a22d-20eb1d8aee97
+md"""
+__EXAMPLE__ Write out the first four nonzero terms in the Fourier–Legendre expansion of 
+```math
+f(x) = \left\{
+\begin{array}{lll}
+0, &\text{  }&-1<x<0 \\
+1, &\text{  }&0\leq x<1 \\
+\end{array}
+\right.
+```
+"""
+
+# ╔═╡ 9d0cb1cf-f817-4d41-bb9a-669ca01ad887
+begin
+	t, s = symbols("t, s", real=true)
+	n = symbols("n",integer=true)
+	Lp(f) = integrate(exp(-s*t)*f,(t,0,oo))
+	Lp(sin(t))
+	html""
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -2354,9 +2789,9 @@ version = "1.0.10+0"
 
 [[GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pkg", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "dba1e8614e98949abfa60480b13653813d8f0157"
+git-tree-sha1 = "0c603255764a1fa0b61752d2bec14cfbd18f7fe8"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.5+0"
+version = "3.3.5+1"
 
 [[GR]]
 deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "Sockets", "Test", "UUIDs"]
@@ -3456,7 +3891,6 @@ version = "0.9.1+5"
 # ╟─9d2ff5ff-d92b-429f-b900-b8aa52f82693
 # ╟─dad1d92e-97dc-46c2-ab45-2436c459b972
 # ╟─adb0ac47-8e74-4479-82fb-3308f801a5c7
-# ╟─0c20d396-1a35-4aef-8c1b-866c9496b4af
 # ╟─6f9f6113-2c07-469b-9054-1f686489a42b
 # ╟─14781050-38ae-4570-bc59-d50cee939e95
 # ╟─7590f82a-1dfd-4edb-9804-1ec5a72a4845
@@ -3465,6 +3899,31 @@ version = "0.9.1+5"
 # ╟─fa9eed64-941e-48b5-bb6f-f7a0d85c1f12
 # ╟─be9459ae-26bd-47de-8801-40aa916ae1d8
 # ╟─b91f84da-f5a6-4a4a-b915-1eab8e775382
+# ╟─973e80f6-1b1a-4241-8b1e-afbea8d0dd1b
+# ╟─ba0393e3-b6aa-4850-89d9-af5dc24c0d4a
+# ╟─d24a53c7-10ab-44ad-b54b-b79ab4844d59
+# ╟─c687c08c-40fe-411b-81b0-2e4aed70e704
+# ╟─9956ff01-8fcb-4a7e-9277-44ad290579a3
+# ╟─308f4c0c-8923-4013-9b5c-dc7fac5cc96e
+# ╟─7eed8ee3-fbf0-442f-864e-5bcba2244a9b
+# ╟─00598371-cb24-4e2e-a905-7f05407f23f9
+# ╟─adaadd66-64e5-4d31-bf98-582a84695b1a
+# ╟─2c698191-4649-4d49-a0c5-8b937bdeff0c
+# ╟─552b90df-1bb4-47bd-83a3-d8dd59bfc9b0
+# ╟─d639a318-4b5d-4d34-8a17-c8523434b5ee
+# ╟─21de6619-cc54-4f64-83e2-56d3c97b5f16
+# ╟─cdea9ddd-c827-4ed7-be92-20cf86796e1e
+# ╟─bc58ab1e-55cc-40e5-89b6-79601f74e569
+# ╟─b5505ca5-c491-4d50-8f70-d10d400fecf0
+# ╟─630c1a04-5039-4876-87a3-1434bebe66e9
+# ╟─3879874e-b35d-4af9-aede-6528365f4890
+# ╟─e4a9fad5-1c61-4f20-ac8c-45964083c7a5
+# ╟─eb0a78f2-4e38-4b50-ae40-723cc16ffea9
+# ╟─dc539496-b56e-4366-bc4e-6e39740b44ba
+# ╟─dc185f92-9333-46e2-9eb5-0879d13b9124
+# ╟─7925e2bf-59e4-4c53-8349-b4022338138b
+# ╟─45fa6519-6dac-4e6c-a22d-20eb1d8aee97
+# ╠═9d0cb1cf-f817-4d41-bb9a-669ca01ad887
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
