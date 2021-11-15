@@ -2221,6 +2221,18 @@ __Remarks__
 - (SLE) with the first two conditiosn is called a __singular boundary-value problem__
 - (SLE) with the last one is called __periodic boundary-value problem__.
 
+
+"""
+
+# ╔═╡ 108a1fc2-f887-474b-8b23-2479a0e4c86f
+md"""
+__Remark__:
+
+By assuming the solutions of ``\text{(SLE)}`` are bounded on the closed interval ``[a, b]`` we can see from inspection that
+- If ``r (a)=0``, then the orthogonality relation ``\text{(ORTH)}`` holds with no boundary condition at ``x = a``;
+- If ``r (b) = 0``, then the orthogonality relation ``\text{(ORTH)}`` holds with no boundary condition at ``x = b``;
+- If ``r (a) = r (b) = 0``, then the orthogonality relation ``\text{(ORTH)}`` holds with no boundary conditions specified at either ``x = a`` or ``x = b``; 
+- If ``r (a)=r (b)``, then the orthogonality relation ``\text{(ORTH)}`` holds with the periodic boundary conditions ``y(a) = y(b), y'(a) = y'(b)``.
 """
 
 # ╔═╡ 21de6619-cc54-4f64-83e2-56d3c97b5f16
@@ -2377,7 +2389,7 @@ The __Fourier–Bessel series__ of a function ``f`` defined on the interval ``(0
 __CASE 1__:
 ```math
 \begin{array}{rcl}
-f(x) &=& \sum_{i=1} c_i J_n(\alpha_i x) \\
+f(x) &=& \sum^{\infty}_{i=1} c_i J_n(\alpha_i x) \\
 c_i &=& \frac{2}{b^2J^2_{n+1}(\alpha_ib)}\int_0^b xf(x)J_n(\alpha_ix)dx
 \end{array}
 ```
@@ -2387,7 +2399,7 @@ where ``\alpha_i`` are defined by ``J_n(\alpha b)=0``.
 __CASE 2__:
 ```math
 \begin{array}{rcl}
-f(x) &=& \sum_{i=1} c_i J_n(\alpha_i x) \\
+f(x) &=& \sum_{i=1}^{\infty} c_i J_n(\alpha_i x) \\
 c_i &=& \frac{2\alpha_i^2}{(\alpha_i^2b^2-n^2+h^2)J^2_{n}(\alpha_ib)}\int_0^b xf(x)J_n(\alpha_ix)dx
 \end{array}
 ```
@@ -2398,12 +2410,12 @@ where ``\alpha_i`` are defined by ``hJ_n(\alpha b)+\alpha b J'_n(\alpha b)=0`` (
 __CASE 3__:
 ```math
 \begin{array}{rcl}
-f(x) &=& c_1 + \sum_{i=2} c_i J_n(\alpha_i x) \\
+f(x) &=& c_1 + \sum_{i=2}^{\infty} c_i J_n(\alpha_i x) \\
 c_1 &=& \frac{2}{b^2}\int_0^b x f(x) dx,\\
 c_i &=& \frac{2}{b^2J^2_{0}(\alpha_ib)}\int_0^b xf(x)J_0(\alpha_ix)dx
 \end{array}
 ```
-where ``\alpha_i`` are defined by ``J_n(\alpha b)=0``.
+where ``\alpha_i`` are defined by ``J'_0(\alpha b)=0``.
 
 """
 
@@ -3911,6 +3923,7 @@ version = "0.9.1+5"
 # ╟─2c698191-4649-4d49-a0c5-8b937bdeff0c
 # ╟─552b90df-1bb4-47bd-83a3-d8dd59bfc9b0
 # ╟─d639a318-4b5d-4d34-8a17-c8523434b5ee
+# ╟─108a1fc2-f887-474b-8b23-2479a0e4c86f
 # ╟─21de6619-cc54-4f64-83e2-56d3c97b5f16
 # ╟─cdea9ddd-c827-4ed7-be92-20cf86796e1e
 # ╟─bc58ab1e-55cc-40e5-89b6-79601f74e569
