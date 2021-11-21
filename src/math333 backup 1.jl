@@ -22,11 +22,7 @@ begin
 	using Plots,  PlotThemes
 	using SymPy
 	using FileIO
-	using Images # , ImageIO, ImageMagick, ImageShow
-	using SpecialFunctions
-	using FastGaussQuadrature
-	using ForwardDiff
-	using Roots
+	using Images # , ImageIO, ImageMagick, ImageShow 
 	# using CalculusWithJulia
 end
 
@@ -2446,19 +2442,6 @@ that satisfy the boundary condition
 2. ``J_1(3\alpha)+\alpha J'_1(3\alpha)=0``.
 """
 
-# ╔═╡ b2cbcf0e-d078-45ba-b3fc-a0b49b57825e
-begin
-	b(x) = besselj(0,x)
-	b(n,x) = besselj(n,x)
-	bd(n,x) = ForwardDiff.derivative(y->b(n,y),x)
-	bconds(x) = b(1,3*x) + x*bd(1,3*x)
-	αᵢ = Roots.find_zeros(bconds,0,50)[2:end]
-	cᵢ = [(18*α*b(2,3*α)/((9*α^2+8)*(b(1,3*α))^2)) for α in αᵢ]
-	Sₙ(n) = x -> sum([cᵢ[i]*b(1,αᵢ[i]*x) for i in 1:n])
-	plot(Sₙ(45),xlimits=(-10,10),frame_style=:origin)
-	
-end
-
 # ╔═╡ dc185f92-9333-46e2-9eb5-0879d13b9124
 md"""
 ### 12.6.2 Fourier–Legendre Series
@@ -2511,151 +2494,6 @@ f(x) = \left\{
 ```
 """
 
-# ╔═╡ 75912a1a-e7dc-43f9-ab1f-026308d97ff7
-md"""
-## 13.1 Separable Partial Differential Equations
-
-### Linear Partial Differential Equation 
-The general form of a __linear second-order partial differential equation__ is given by
-```math
-A\frac{\partial^2 u}{\partial x^2} +B\frac{\partial^2 u}{\partial x\partial y}
-+C \frac{\partial^2 u}{\partial y^2} 
-+D \frac{\partial u}{\partial x}
-+E \frac{\partial u}{\partial y}
-+F u = G \tag{L2PDE}
-```
-where the coefficients ``A, B, C,… , G`` are constants or functions of ``x`` and ``y``. 
-- When ``G(x, y)= 0``, equation (``\text{L2PDE}``) is said to be __homogeneous__; otherwise, it is __nonhomogeneous__. 
-- __Solution of a PDE__: A solution of a linear partial differential equation (``\text{L2PDE}``) is a function ``u(x, y)`` of two independent variables that possesses all partial derivatives occurring in the equation and that satisfies the equation in some region of the ``xy``-plane.
-- Our focus throughout will be on finding __particular solutions__ of some of the important linear PDEs, that is, equations that appear in many applications.
-"""
-
-# ╔═╡ 18af244e-47cf-44fd-a6ac-186ddb5a2d9e
-md"""
-### Separation of Variables
-We seek to find a particular solution in the form of product of a function ``x`` and a function of ``y``:
-```math
-u(x, y) = X(x)Y( y).
-```
-With this assumption, it is sometimes possible to reduce a linear PDE in two variables to two ODEs.
-"""
-
-# ╔═╡ f2aa1e09-c3e4-40f7-99e6-2b978e1cdbf8
-md"""
-__Example__ Find product solutions of 
-```math
-\frac{\partial^2 u}{\partial x^2} =4 \frac{\partial u}{\partial x}
-```
-"""
-
-# ╔═╡ 38e6676f-f995-45d2-af89-84c2ef6f8ba1
-md"""
-### Superposition Principle
-If ``u_1, u_2,\cdots, u_k`` are solutions of a homogeneous linear partial differential equation, then the linear combination
-```math 
-u = c_1u_1+ c_2u_2 + \cdots + c_ku_k ,
-```
-where the ``c_i, \; i=1,2,3,\cdots, k`` are constants, is also a solution.
-
-- we shall assume that whenever we have an infinite set ``u_1, u_2, u_3,…`` of solutions of a homogeneous linear equation, we can construct yet another solution u by forming the infinite series
-```math
-u=\sum_{k=1}^{\infty}c_ku_k,\qquad\text{ where the } c_k , k = 1, 2,\cdots , \text{ are constants.}
-```
-"""
-
-# ╔═╡ 8b4a914a-a2a2-41b3-b516-22a985594797
-md"""
-### Classification of Equations
-The linear second-order partial differential equation
-```math
-A\frac{\partial^2 u}{\partial x^2} +B\frac{\partial^2 u}{\partial x\partial y}
-+C \frac{\partial^2 u}{\partial y^2} 
-+D \frac{\partial u}{\partial x}
-+E \frac{\partial u}{\partial y}
-+F u = G \tag{L2PDE}
-```
-where the coefficients ``A, B, C,… , G`` are real constants, is said to be
-- __hyperbolic__ if ``\hspace{10mm}``  ``B^2 - 4AC > 0``,
-- __parabolic__ if  ``\hspace{12mm}``  ``B^2 - 4AC = 0,``
-- __elliptic__ if  ``\hspace{16mm}``  ``B^2 + 4AC < 0``.
-
-"""
-
-# ╔═╡ 201c40b1-cded-421f-96ff-d64d0ba4a576
-md"""
-__Example__ Classify the following equations:
-```math
-\text{(a)} 3\frac{\partial^2 u}{\partial x^2}=\frac{\partial u}{\partial y}, \quad
-\text{(b)} \frac{\partial^2 u}{\partial x^2}=\frac{\partial^2 u}{\partial y^2}, \quad
-\text{(c)} \frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2}=0, 
-```
-"""
-
-# ╔═╡ 71c17f11-4572-4545-9629-e1d885462afa
-begin
-	rodimg = Resource("https://www.dropbox.com/s/gd8lslvvvkfe5om/sec133rod.png?raw=1")
-md"""
-## 13.3 Heat Equation
-$(rodimg)
-The temperature ``u(x,t)`` in the rod is determined from the boundary-value problem
-```math
-\begin{array}{rcllr}
-k\frac{\partial^2 u }{\partial x^2} &=& \frac{\partial u }{\partial t} & 0 <x<L,& t>0\\
-u(0,t) &=& 0, &u(L,t)=0, & t>0\\
-u(x,0) &=& f(x),& 0<x<L\\
-\end{array}
-```
-We solve this __BVP__ using the method of separation of variables.
-"""
-end
-
-# ╔═╡ 8971b64e-b5ee-498e-bf50-f7ecf885b020
-begin 
-	stringImg = Resource("https://www.dropbox.com/s/tqnhwolyxmq2man/sec134string.png?raw=1")
-md"""
-## 13.4 Wave Equation 
-The vertical displacement ``u(x, t)`` of a string of length ``L`` that is freely 
-vibrating in the vertical plane shown in Figure below 
-
-$(stringImg)
-
-is determined from 
-
-```math
-\begin{array}{rcllr}
-a^2\frac{\partial^2 u }{\partial x^2} &=& \frac{\partial^2 u }{\partial t^2} & 0 <x<L,& t>0\\
-u(0,t) &=& 0, &u(L,t)=0, & t>0\\
-u(x,0) &=& f(x),&\left.\frac{\partial u}{\partial t}\right|_{t=0} =g(x),& 0<x<L\\
-\end{array}
-```
-"""
-end
-
-
-# ╔═╡ aaf3098f-19dd-4cee-8d21-a98c9f3fbceb
-md"""
-__Example__
-
-Solve
-```math
-\begin{array}{rcllr}
-a^2\frac{\partial^2 u }{\partial x^2} &=& \frac{\partial^2 u }{\partial t^2} & 0 <x<L,& t>0\\
-u(0,t) &=& 0, &u(L,t)=0, & t>0\\
-u(x,0) &=& \frac{x(L-x)}{4},&\left.\frac{\partial u}{\partial t}\right|_{t=0} =0,& 0<x<L\\
-\end{array}
-```
-and 
-
-```math
-\begin{array}{rcllr}
-a^2\frac{\partial^2 u }{\partial x^2} &=& \frac{\partial^2 u }{\partial t^2} & 0 <x<L,& t>0\\
-u(0,t) &=& 0, &u(L,t)=0, & t>0\\
-u(x,0) &=& 0,&\left.\frac{\partial u}{\partial t}\right|_{t=0} =x(L-x),& 0<x<L\\
-\end{array}
-```
-
-"""
-
 # ╔═╡ 9d0cb1cf-f817-4d41-bb9a-669ca01ad887
 begin
 	t, s = symbols("t, s", real=true)
@@ -2668,9 +2506,7 @@ end
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-FastGaussQuadrature = "442a2c76-b920-505d-bb47-c5924d526838"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
@@ -2678,22 +2514,16 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PlotThemes = "ccf2f8ad-2431-5c83-bf29-c5338b663b6a"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
-SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
 
 [compat]
-FastGaussQuadrature = "~0.4.7"
 FileIO = "~1.11.0"
-ForwardDiff = "~0.10.23"
 HypertextLiteral = "~0.9.0"
 Images = "~0.24.1"
 LaTeXStrings = "~1.2.1"
 PlotThemes = "~2.0.1"
 Plots = "~1.20.0"
 PlutoUI = "~0.7.1"
-Roots = "~1.3.7"
-SpecialFunctions = "~1.8.1"
 SymPy = "~1.0.52"
 """
 
@@ -2769,12 +2599,6 @@ git-tree-sha1 = "bdc0937269321858ab2a4f288486cb258b9a0af7"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
 version = "1.3.0"
 
-[[ChangesOfVariables]]
-deps = ["LinearAlgebra", "Test"]
-git-tree-sha1 = "9a1d594397670492219635b35a3d830b04730d62"
-uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
-version = "0.1.1"
-
 [[ColorSchemes]]
 deps = ["ColorTypes", "Colors", "FixedPointNumbers", "Random"]
 git-tree-sha1 = "9995eb3977fbf67b86d0a0a0508e83017ded03f2"
@@ -2809,12 +2633,6 @@ git-tree-sha1 = "68a0743f578349ada8bc911a5cbd5a2ef6ed6d1f"
 uuid = "38540f10-b2f7-11e9-35d8-d573e4eb0ff2"
 version = "0.2.0"
 
-[[CommonSubexpressions]]
-deps = ["MacroTools", "Test"]
-git-tree-sha1 = "7b8a93dba8af7e3b42fecabf646260105ac373f7"
-uuid = "bbf7d656-a473-5ed7-a52c-81e309532950"
-version = "0.3.0"
-
 [[Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "SHA", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
 git-tree-sha1 = "344f143fa0ec67e47917848795ab19c6a455f32c"
@@ -2835,12 +2653,6 @@ deps = ["JSON", "VersionParsing"]
 git-tree-sha1 = "299304989a5e6473d985212c28928899c74e9421"
 uuid = "8f4d0f93-b110-5947-807f-2305c1781a2d"
 version = "1.5.2"
-
-[[ConstructionBase]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "f74e9d5388b8620b4cee35d4c5a618dd4dc547f4"
-uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-version = "1.3.0"
 
 [[Contour]]
 deps = ["StaticArrays"]
@@ -2882,18 +2694,6 @@ uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 [[DelimitedFiles]]
 deps = ["Mmap"]
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-
-[[DiffResults]]
-deps = ["StaticArrays"]
-git-tree-sha1 = "c18e98cba888c6c25d1c3b048e4b3380ca956805"
-uuid = "163ba53b-c6d8-5494-b064-1a9d43ac40c5"
-version = "1.0.3"
-
-[[DiffRules]]
-deps = ["LogExpFunctions", "NaNMath", "Random", "SpecialFunctions"]
-git-tree-sha1 = "3287dacf67c3652d3fed09f4c12c187ae4dbb89a"
-uuid = "b552c78f-8df3-52c6-915a-8e097449b14b"
-version = "1.4.0"
 
 [[Distances]]
 deps = ["LinearAlgebra", "Statistics", "StatsAPI"]
@@ -2963,12 +2763,6 @@ git-tree-sha1 = "3676abafff7e4ff07bbd2c42b3d8201f31653dcc"
 uuid = "f5851436-0d7a-5f13-b9de-f02708fd171a"
 version = "3.3.9+8"
 
-[[FastGaussQuadrature]]
-deps = ["LinearAlgebra", "SpecialFunctions", "StaticArrays"]
-git-tree-sha1 = "5829b25887e53fb6730a9df2ff89ed24baa6abf6"
-uuid = "442a2c76-b920-505d-bb47-c5924d526838"
-version = "0.4.7"
-
 [[FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
 git-tree-sha1 = "937c29268e405b6808d958a9ac41bfe1a31b08e7"
@@ -2993,12 +2787,6 @@ git-tree-sha1 = "8339d61043228fdd3eb658d86c926cb282ae72a8"
 uuid = "59287772-0a20-5a39-b81b-1366585eb4c0"
 version = "0.4.2"
 
-[[ForwardDiff]]
-deps = ["CommonSubexpressions", "DiffResults", "DiffRules", "LinearAlgebra", "LogExpFunctions", "NaNMath", "Preferences", "Printf", "Random", "SpecialFunctions", "StaticArrays"]
-git-tree-sha1 = "6406b5112809c08b1baa5703ad274e1dded0652f"
-uuid = "f6369f11-7733-5829-9624-2563aa707210"
-version = "0.10.23"
-
 [[FreeType2_jll]]
 deps = ["Artifacts", "Bzip2_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll"]
 git-tree-sha1 = "cbd58c9deb1d304f5a245a0b7eb841a2560cfec6"
@@ -3010,10 +2798,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "aa31987c2ba8704e23c6c8ba8a4f769d5d7e4f91"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.10+0"
-
-[[Future]]
-deps = ["Random"]
-uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pkg", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
@@ -3212,17 +2996,6 @@ git-tree-sha1 = "3cc368af3f110a767ac786560045dceddfc16758"
 uuid = "8197267c-284f-5f27-9208-e0e47529a953"
 version = "0.5.3"
 
-[[InverseFunctions]]
-deps = ["Test"]
-git-tree-sha1 = "a7254c0acd8e62f1ac75ad24d5db43f5f19f3c65"
-uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
-version = "0.1.2"
-
-[[IrrationalConstants]]
-git-tree-sha1 = "7fd44fd4ff43fc60815f8e764c0f352b83c49151"
-uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
-version = "0.1.1"
-
 [[IterTools]]
 git-tree-sha1 = "05110a2ab1fc5f932622ffea2a003221f4782c18"
 uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
@@ -3355,12 +3128,6 @@ version = "2.36.0+0"
 deps = ["Libdl"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
-[[LogExpFunctions]]
-deps = ["ChainRulesCore", "ChangesOfVariables", "DocStringExtensions", "InverseFunctions", "IrrationalConstants", "LinearAlgebra"]
-git-tree-sha1 = "be9eef9f9d78cecb6f262f3c10da151a6c5ab827"
-uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-version = "0.3.5"
-
 [[Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
@@ -3455,10 +3222,6 @@ deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll"]
 git-tree-sha1 = "923319661e9a22712f24596ce81c54fc0366f304"
 uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
 version = "3.1.1+0"
-
-[[OpenLibm_jll]]
-deps = ["Artifacts", "Libdl"]
-uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -3623,12 +3386,6 @@ git-tree-sha1 = "4036a3bd08ac7e968e27c203d45f5fff15020621"
 uuid = "ae029012-a4dd-5104-9daa-d747884805df"
 version = "1.1.3"
 
-[[Roots]]
-deps = ["CommonSolve", "Printf", "Setfield"]
-git-tree-sha1 = "4c40dc61b51054bdb93536400420d73fdca6865e"
-uuid = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
-version = "1.3.7"
-
 [[Rotations]]
 deps = ["LinearAlgebra", "StaticArrays", "Statistics"]
 git-tree-sha1 = "2ed8d8a16d703f900168822d83699b8c3c1a5cd8"
@@ -3646,12 +3403,6 @@ version = "1.1.0"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
-
-[[Setfield]]
-deps = ["ConstructionBase", "Future", "MacroTools", "Requires"]
-git-tree-sha1 = "def0718ddbabeb5476e51e5a43609bee889f285d"
-uuid = "efcf1570-3423-57d1-acb7-fd33fddbac46"
-version = "0.8.0"
 
 [[SharedArrays]]
 deps = ["Distributed", "Mmap", "Random", "Serialization"]
@@ -3683,10 +3434,10 @@ deps = ["LinearAlgebra", "Random"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [[SpecialFunctions]]
-deps = ["ChainRulesCore", "IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
-git-tree-sha1 = "f0bccf98e16759818ffc5d97ac3ebf87eb950150"
+deps = ["OpenSpecFun_jll"]
+git-tree-sha1 = "d8d8b8a9f4119829410ecd706da4cc8594a1e020"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
-version = "1.8.1"
+version = "0.10.3"
 
 [[StackViews]]
 deps = ["OffsetArrays"]
@@ -4182,19 +3933,9 @@ version = "0.9.1+5"
 # ╟─e4a9fad5-1c61-4f20-ac8c-45964083c7a5
 # ╟─eb0a78f2-4e38-4b50-ae40-723cc16ffea9
 # ╟─dc539496-b56e-4366-bc4e-6e39740b44ba
-# ╠═b2cbcf0e-d078-45ba-b3fc-a0b49b57825e
 # ╟─dc185f92-9333-46e2-9eb5-0879d13b9124
 # ╟─7925e2bf-59e4-4c53-8349-b4022338138b
 # ╟─45fa6519-6dac-4e6c-a22d-20eb1d8aee97
-# ╟─75912a1a-e7dc-43f9-ab1f-026308d97ff7
-# ╟─18af244e-47cf-44fd-a6ac-186ddb5a2d9e
-# ╟─f2aa1e09-c3e4-40f7-99e6-2b978e1cdbf8
-# ╟─38e6676f-f995-45d2-af89-84c2ef6f8ba1
-# ╟─8b4a914a-a2a2-41b3-b516-22a985594797
-# ╟─201c40b1-cded-421f-96ff-d64d0ba4a576
-# ╟─71c17f11-4572-4545-9629-e1d885462afa
-# ╟─8971b64e-b5ee-498e-bf50-f7ecf885b020
-# ╟─aaf3098f-19dd-4cee-8d21-a98c9f3fbceb
 # ╠═9d0cb1cf-f817-4d41-bb9a-669ca01ad887
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
