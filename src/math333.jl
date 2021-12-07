@@ -2544,7 +2544,7 @@ With this assumption, it is sometimes possible to reduce a linear PDE in two var
 md"""
 __Example__ Find product solutions of 
 ```math
-\frac{\partial^2 u}{\partial x^2} =4 \frac{\partial u}{\partial x}
+\frac{\partial^2 u}{\partial x^2} =4 \frac{\partial u}{\partial y}
 ```
 """
 
@@ -2655,6 +2655,229 @@ u(x,0) &=& 0,&\left.\frac{\partial u}{\partial t}\right|_{t=0} =x(L-x),& 0<x<L\\
 ```
 
 """
+
+# ╔═╡ ed6e16d1-29bc-4dda-a4d0-ebcfcc3f1820
+begin
+	lapImg = Resource("https://www.dropbox.com/s/25rbql09qyu5zh3/sec135laplace.png?raw=1",:width=>300)
+md"""
+## 13.5 Laplace’s Equation
+Suppose we wish to find the steady-state temperature ``u(x, y)`` in a rectangular 
+plate whose vertical edges ``x = 0`` and ``x = a`` are insulated, and whose upper and lower edges ``y =b`` and ``y = 0`` are maintained at temperatures ``f (x)`` and ``0``, respectively. See FIGURE below. When no 
+heat escapes from the lateral faces of the plate, we solve the following boundary-value problem: 
+
+$(lapImg)
+
+```math
+\begin{array}{rcllr}
+\frac{\partial^2 u }{\partial x^2}+\frac{\partial^2 u }{\partial y^2} &=& 0 & 0<x<a,& 0<y<b\\
+\left.\frac{\partial u}{\partial x}\right|_{x=0} &=& 0, &
+\left.\frac{\partial u}{\partial x}\right|_{x=a}=0, & 0<y<b\\
+u(x,0) &=& 0,&u(x,b) =f(x),& 0<x<a\\
+\end{array}
+```
+"""
+end
+
+# ╔═╡ 62705759-8b63-40a6-b07d-81de9f7cd82a
+md"""
+### Dirichlet Problem 
+A boundary-value problem in which we seek a solution to an elliptic 
+partial differential equation such as Laplace’s equation 	``\nabla^2 u = 0`` within a region ``R`` (in the plane or ``3``-space) such that ``u`` takes on prescribed values on the entire boundary of the region is called a __Dirichlet problem__. 
+```math
+\begin{array}{rcllr}
+\frac{\partial^2 u }{\partial x^2}+\frac{\partial^2 u }{\partial y^2} &=& 0 & 0<x<a,& 0<y<b\\
+u(0,y) &=& 0, &u(a,y)=0, & 0<y<b\\
+u(x,0) &=& 0,&u(x,b) =f(x),& 0<x<b\\
+\end{array}
+```
+__Remark__
+- The __maximum principle__ states a solution ``u`` of Laplace’s equation within a bounded region ``R`` with boundary ``B`` (such as a rectangle, circle, sphere, and so on) takes on its maximum and minimum values on ``B``.
+"""
+
+# ╔═╡ 8480c6e2-c3fb-482c-bac2-5724a0477cf1
+md"""
+__EXAMPLE__
+```math
+\begin{array}{rcllr}
+\frac{\partial^2 u }{\partial x^2}+\frac{\partial^2 u }{\partial y^2} &=& 0 & 0<x<a,& 0<y<b\\
+u(0,y) &=& 0, &u(a,y)=0, & 0<y<b\\
+u(x,0) &=& f(x),&u(x,b) =0,& 0<x<a\\
+\end{array}
+```
+"""
+
+# ╔═╡ 1c3f4966-7cdc-40b3-9192-aed1fb47be85
+md"""
+## 14.2 Cylindrical Coordinates
+
+__The two-dimensional heat equation__
+```math
+\begin{array}{lcl}
+k\left(
+\frac{\partial^2 u}{\partial x^2}+
+\frac{\partial^2 u}{\partial y^2}
+\right) &=& \frac{\partial u}{\partial t}
+\end{array}
+```
+is expressed in __polar coordinates__ 
+```math
+\begin{array}{lcl}
+k\left(
+\frac{\partial^2 u}{\partial r^2}+
+\frac{1}{r}\frac{\partial u}{\partial r}+
+\frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2}
+\right) &=& \frac{\partial u}{\partial t}
+\end{array}
+```
+
+__The two-dimensional wave equation__
+```math
+\begin{array}{lcl}
+a^2\left(
+\frac{\partial^2 u}{\partial x^2}+
+\frac{\partial^2 u}{\partial y^2}
+\right) &=& \frac{\partial^2 u}{\partial t^2}
+\end{array}
+```
+is expressed in __polar coordinates__ 
+```math
+\begin{array}{lcl}
+a^2\left(
+\frac{\partial^2 u}{\partial r^2}+
+\frac{1}{r}\frac{\partial u}{\partial r}+
+\frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2}
+\right) &=& \frac{\partial^2 u}{\partial t^2}
+\end{array}
+```
+where 
+```math
+u=u(r,\theta,t)
+```
+"""
+
+# ╔═╡ 48b285a9-9973-4088-a34a-f194fc97327b
+md"""
+### Radial Symmetry
+we shall consider the simpler, but still important, problems that possess __radial symmetry__—that is, problems in which the unknown function ``u`` is independent of the angular coordinate ``\theta``. So we have
+```math
+\begin{array}{lcr}
+\begin{array}{lcl}
+k\left(
+\frac{\partial^2 u}{\partial r^2}+
+\frac{1}{r}\frac{\partial u}{\partial r}
+\right) &=& \frac{\partial u}{\partial t}
+\end{array} & \text{and} &
+\begin{array}{lcl}
+a^2\left(
+\frac{\partial^2 u}{\partial r^2}+
+\frac{1}{r}\frac{\partial u}{\partial r}
+\right) &=& \frac{\partial^2 u}{\partial t^2}
+\end{array}
+\end{array}
+```
+where 
+```math
+u=u(r,t)
+```
+"""
+
+# ╔═╡ 66895efa-b335-4447-8abf-6fb365791ad5
+begin
+	sec142ex1Img = Resource("https://www.dropbox.com/s/esz8qbs1rjeabzp/sec142ex1.png?raw=1", :width=>300)
+md"""
+__EXAMPLE__
+Find the displacement ``u(r, t)`` of a circular membrane of radius ``c`` clamped along its circumferfence if its initial displacement is ``f(r)`` and its initial velocity is ``g(r)``. 
+
+$(sec142ex1Img)
+
+The BVP is
+```math
+\begin{array}{l}
+a^2\left(\frac{\partial^2 u}{\partial r^2}+\frac{1}{r}\frac{\partial u}{\partial r}\right) = \frac{\partial^2 u}{\partial t^2}, \; 0<r<c, \;\; t>0 \\
+u(c,t) = 0, \quad t>0 \\
+u(r,0)=f(r), \quad u_t(t,0)=g(r), \quad 0<r<c.
+\end{array}
+```
+"""
+end
+
+# ╔═╡ 4f5cf465-b831-4591-ac50-d10c81a638af
+md"""
+### Laplacian in Cylindrical Coordinates
+```math
+x = r\cos \theta, \quad y=r\sin \theta, \quad z = z
+```
+so the Laplacian is
+```math
+\nabla^2u = \frac{\partial^2 u}{\partial r^2}+\frac{1}{r}\frac{\partial u}{\partial r}
++\frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2}+\frac{\partial^2 u}{\partial z^2}
+```
+"""
+
+# ╔═╡ 14d5845f-90fc-497c-94f8-a100eb011268
+begin
+	sec142ex2Img = Resource("https://www.dropbox.com/s/vwzbeulvmsnaa4f/sec142ex2.png?raw=1",:width=>200)
+md"""
+__EXAMPLE__ Find the steady-state temperature in the circular cylinder shown in
+
+$(sec142ex2Img)
+
+Solution: The BVP is
+```math
+\begin{array}{l}
+\frac{\partial^2 u}{\partial r^2}+\frac{1}{r}\frac{\partial u}{\partial r}
++\frac{\partial^2 u}{\partial z^2}=0, \; 0<r<2, \;\; 0<z<4 \\
+u(2,z) = 0, \quad 0<z<4 \\
+u(r,0)=0, u(r,4)=u_0, \quad 0<r<2.
+\end{array}
+```
+"""
+end
+
+# ╔═╡ 4d4bf80f-a545-46b8-ba15-7e7146242378
+sec143sphImg = Resource("https://www.dropbox.com/s/0o24wfewf5pqadf/sec143spherical.png?raw=1", :width=>400);html""
+
+# ╔═╡ 5f690f76-373c-403a-ae3a-2ebd6ce1e69f
+md"""
+## 14.3 Spherical Coordinates
+$(sec143sphImg)
+
+```math
+x = r\sin\theta\cos\phi, \quad y = r\sin\theta\sin\phi, \quad z = r\cos\theta
+```
+The Laplacian ``\nabla^2 u`` then is 
+```math
+\nabla^2 u = \frac{\partial^2 u}{\partial r^2} + \frac{2}{r}\frac{\partial u}{\partial r}+\frac{1}{r^2\sin^2\theta}\frac{\partial^2 u}{\partial \phi^2}+
+\frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2}+
+\frac{\cot\theta}{r^2}\frac{\partial u}{\partial \theta}
+```
+We shall consider only a few of the simpler problems that are independent of the azimuthal angle ``\phi``. That is
+```math
+\frac{\partial u}{\partial \phi}=\frac{\partial^2 u}{\partial \phi^2}=0
+```
+"""
+
+# ╔═╡ 8b257fb2-3025-4834-983f-9fc36e4b7caa
+sec143ex1Img = Resource("https://www.dropbox.com/s/dsgapsgrsu003eb/sec143ex1.png?raw=1",:width=>400);html""
+
+# ╔═╡ d70ba1a6-9d03-4d37-a1fe-525a1bfc3941
+md"""
+__Example__
+Find the steady-state temperature ``u(r, \theta)`` in the sphere shown in
+$(sec143ex1Img)
+__Solution__ 
+
+The temperature is determined from
+```math
+\begin{array}{c}
+\frac{\partial^2 u}{\partial r^2} + \frac{2}{r}\frac{\partial u}{\partial r}+
+\frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2}+
+\frac{\cot\theta}{r^2}\frac{\partial u}{\partial \theta}=0, \quad 0<r<c, 0<\theta<\pi\\
+u(c,\theta)=f(\theta), \quad 0<\theta<\pi
+\end{array}
+```
+"""
+
 
 # ╔═╡ 9d0cb1cf-f817-4d41-bb9a-669ca01ad887
 begin
@@ -3047,9 +3270,9 @@ version = "0.21.0+0"
 
 [[Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE_jll", "Pkg", "Zlib_jll"]
-git-tree-sha1 = "7bf67e9a481712b3dbe9cb3dac852dc4b1162e02"
+git-tree-sha1 = "74ef6288d071f58033d54fd6708d4bc23a8b8972"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
-version = "2.68.3+0"
+version = "2.68.3+1"
 
 [[Graphics]]
 deps = ["Colors", "LinearAlgebra", "NaNMath"]
@@ -3305,9 +3528,9 @@ uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[Libffi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "761a393aeccd6aa92ec3515e428c26bf99575b3b"
+git-tree-sha1 = "0b4a5d71f3e5200a7dff793393e09dfc2d874290"
 uuid = "e9f186c6-92d2-5b65-8a66-fee21dc1b490"
-version = "3.2.2+0"
+version = "3.2.2+1"
 
 [[Libgcrypt_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll", "Pkg"]
@@ -4195,6 +4418,18 @@ version = "0.9.1+5"
 # ╟─71c17f11-4572-4545-9629-e1d885462afa
 # ╟─8971b64e-b5ee-498e-bf50-f7ecf885b020
 # ╟─aaf3098f-19dd-4cee-8d21-a98c9f3fbceb
+# ╟─ed6e16d1-29bc-4dda-a4d0-ebcfcc3f1820
+# ╟─62705759-8b63-40a6-b07d-81de9f7cd82a
+# ╟─8480c6e2-c3fb-482c-bac2-5724a0477cf1
+# ╟─1c3f4966-7cdc-40b3-9192-aed1fb47be85
+# ╟─48b285a9-9973-4088-a34a-f194fc97327b
+# ╟─66895efa-b335-4447-8abf-6fb365791ad5
+# ╟─4f5cf465-b831-4591-ac50-d10c81a638af
+# ╟─14d5845f-90fc-497c-94f8-a100eb011268
+# ╟─4d4bf80f-a545-46b8-ba15-7e7146242378
+# ╟─5f690f76-373c-403a-ae3a-2ebd6ce1e69f
+# ╟─8b257fb2-3025-4834-983f-9fc36e4b7caa
+# ╠═d70ba1a6-9d03-4d37-a1fe-525a1bfc3941
 # ╠═9d0cb1cf-f817-4d41-bb9a-669ca01ad887
 # ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
