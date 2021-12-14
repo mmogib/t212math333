@@ -2879,6 +2879,199 @@ u(c,\theta)=f(\theta), \quad 0<\theta<\pi
 """
 
 
+# ╔═╡ 7ee8033d-c469-49bf-85cc-08e725b8eeac
+md"""
+## 15.2 Applications of the Laplace Transform
+
+Recall: The Laplace transform of a function ``f (t), t > 0``, 
+```math
+\mathcal{L}\{f(t)\} = \int_0^{\infty} e^{-st} f(t) dt
+```
+we write
+```math
+\mathcal{L}\{f(t)\}= F(s)
+```
+### Transform of Partial Derivatives
+We define the Laplace transform of ``u(x, t)`` with respect to ``t`` by
+```math
+\mathcal{L}\{u(x,t)\} = \int_0^{\infty} e^{-st} u(x,t) dt = U(x,s)
+```
+where ``x`` is treated as a parameter.
+
+Now we have
+```math
+\begin{array}{lcl}
+\displaystyle \mathcal{L}\left\{\frac{\partial u}{\partial t}\right\}&=&\displaystyle
+sU(x,s)-u(x,0)\\
+\displaystyle \mathcal{L}\left\{\frac{\partial^2 u}{\partial t^2}\right\}&=&\displaystyle
+s^2U(x,s)-su(x,0)-u_t(x,0)\\
+\displaystyle \mathcal{L}\left\{\frac{\partial^2 u}{\partial x^2}\right\}&=&\displaystyle
+\frac{d^2 U}{d x^2}
+\\
+\end{array}
+```
+
+"""
+
+
+
+# ╔═╡ 4c29e883-ed1a-4c3d-b2b5-c1ed7e894c79
+md"""
+__EXAMPLE__
+Use Laplace transform to solve the BVB 
+```math
+\begin{array}{ll}
+\text{Solve} & 
+\displaystyle\frac{\partial^2 u}{\partial x^2} = \frac{\partial^2 u}{\partial t^2}, \quad 0<x<1, t>0 \\
+\text{subject to} &\displaystyle
+u(0,t)=0, u(1,t)=0,\quad t>0\\
+ &\displaystyle
+u(x,0)=0, u_t(x,0)=\sin\pi x,\quad 0<x<1\\
+\end{array}
+```
+"""
+
+# ╔═╡ 1b5be907-04dc-4323-bc96-393e9bd98c3f
+md"""
+__EXERCISE__ A string is secured to the ``x``-axis at ``(0, 0)`` and ``(L, 0)``. Find the displacement ``u(x, t)`` if the string starts from rest in the initial 
+position ``A \sin(\pi x/L)``.
+"""
+
+# ╔═╡ 99946b5c-c729-4e82-b8ac-c4dbbd822b05
+md"""
+__EXAMPLE__ The displacement of a semi-infinite elastic string is determined 
+from
+```math
+\begin{array}{l} 
+\displaystyle a^2\frac{\partial^2 u}{\partial x^2} = \frac{\partial^2 u}{\partial t^2}, \quad x>0, t>0 \\
+\displaystyle
+u(0,t)=f(t), \lim_{x\to \infty}u(x,t)=0,\quad t>0\\
+\displaystyle
+u(x,0)=0, u_t(x,0)=0,\quad x>0\\
+\end{array}
+
+```
+Solve for ``u(x, t)``.
+"""
+
+# ╔═╡ 743a4bf7-8d3b-4411-8e7f-717e33820692
+md"""
+## 15.4 Fourier Transforms
+
+### Fourier Transform Pairs
+```math
+\begin{array}{lll}
+\text{(i)} & \text{Fourier transform:} & 
+\displaystyle\mathcal{F}\{f(x)\} = \int_{-\infty}^{\infty} f(x)e^{i\alpha x} dx = F(\alpha)
+\\
+
+			& \text{Inverse Fourier transform:} & 
+\displaystyle\mathcal{F}^{-1}\{F(\alpha)\} = \frac{1}{2\pi}\int_{-\infty}^{\infty} F(\alpha)e^{-i\alpha x} d\alpha = f(x)
+\\
+\text{(ii)} & \text{Fourier sine transform:} & 
+\displaystyle\mathcal{F}_s\{f(x)\} = \int_{0}^{\infty} f(x)\sin\alpha x dx = F(\alpha)
+\\
+ & \text{Inveres Fourier sine transform:} & 
+\displaystyle\mathcal{F}_s^{-1}\{F(\alpha)\} = \frac{2}{\pi}\int_{0}^{\infty} F(\alpha)\sin \alpha x d\alpha = f(x)
+\\
+\text{(iii)} & \text{Fourier cosine transform:} & 
+\displaystyle\mathcal{F}_c\{f(x)\} = \int_{0}^{\infty} f(x)\cos\alpha x dx = F(\alpha)
+\\
+ & \text{Inveres Fourier cosine transform:} & 
+\displaystyle\mathcal{F}_c^{-1}\{F(\alpha)\} = \frac{2}{\pi}\int_{0}^{\infty} F(\alpha)\cos \alpha x d\alpha = f(x)
+\\
+
+\end{array}
+```
+"""
+
+# ╔═╡ 80f4b1a7-3664-486d-91fc-92a787e9a458
+md"""
+### Fourier Transform of derivatives
+Suppose that ``f`` is continuous and absolutely integrable on the interfval ``(-\infty, \infty)`` and ``f'`` is piecewise continuous on every finite interval. If ``f (x) \to 0`` as ``x\to\pm \infty``, then integration by parts gives
+```math
+\mathcal{F}\{f'(x)\} = -i\alpha F(\alpha).
+```
+and 
+```math
+\mathcal{F}\{f''(x)\} = (-i\alpha)^2 F(\alpha)=-\alpha^2F(\alpha).
+```
+In general 
+```math
+\mathcal{F}\{f^{(n)}(x)\} = (-i\alpha)^n F(\alpha), \quad n=0,1,2,\cdots
+```
+__Remark__
+The sine and cosine transforms are not suitable for transforming 
+the first derivative (or, for that matter, any derivative of odd order).
+```math
+\mathcal{F}_s\{f'(x)\} = -\alpha \mathcal{F}_c(f(x)), \quad 
+\mathcal{F}_c\{f'(x)\} = \alpha \mathcal{F}_s(f(x))-f(0).
+```
+"""
+
+# ╔═╡ d4c1a7dc-327f-46d4-9848-c2c9cd6aaaa7
+md"""
+### Fourier Sine Transform 
+Suppose that ``f`` and ``f'`` are continuous, ``f`` is absolutely integrable 
+on the interval ``[0, \infty)``, and ``f'`` is piecewise continuous on every finite interval. If ``f\to 0`` and ``f'\to 0`` as ``x \to \infty``, then
+```math
+\mathcal{F}_s\{f''(x)\} = -\alpha^2 F(\alpha)+\alpha f(0).
+```
+### Fourier Cosine Transform
+```math
+\mathcal{F}_c\{f''(x)\} = -\alpha^2 F(\alpha)-f'(0).
+```
+"""
+
+# ╔═╡ 166393e7-4493-4cdb-94a4-ad3e99e06fab
+md"""
+__Two Useful Fourier Transforms__
+
+Fourier sine and cosine transforms of ``f(x) = e^{-bx}, x > 0, b > 0``.
+```math
+\begin{array}{lclcl}
+\displaystyle\mathcal{F}_s\{e^{-bx}\} & = & \displaystyle\int_0^{\infty}e^{-bx} \sin\alpha x dx &=& \displaystyle\frac{\alpha}{b^2+\alpha^2} \\
+\displaystyle\mathcal{F}_c\{e^{-bx}\} & = & \displaystyle\int_0^{\infty}e^{-bx} \cos\alpha x dx &=& \displaystyle\frac{b}{b^2+\alpha^2}
+\end{array}
+```
+"""
+
+# ╔═╡ 30a6e2bd-e55d-423b-af84-37c80715d8c7
+md"""
+__EXAMPLE__
+Solve 
+```math
+\begin{array}{l}
+\displaystyle k\frac{\partial^2 u}{\partial x^2} = \frac{\partial u}{\partial t}, \quad -\infty <x<\infty, \; t>0
+\end{array}
+```
+subject to
+```math
+\begin{array}{l}
+\displaystyle u(x,0)=\left\{
+\begin{array}{ll}
+u_0, & |x|<1, \\
+0, & |x|>1.
+\end{array}
+\right.
+\end{array}
+```
+"""
+
+# ╔═╡ 0d6f21f4-a348-4e5d-b49e-f41a4d521d0b
+md"""
+__EXAMPLE__
+The steady-state temperature in a semi-infinite plate is determined from
+```math
+\begin{array}{l}
+\displaystyle \frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2} =0, \quad 0 <x<\pi, \; y>0 \\
+u(0,y)=0, \quad u(\pi,y)=e^{-y}, \quad y>0\\
+\displaystyle \left.\frac{\partial u}{\partial y}\right|_{y=0}=0, \quad 0<x<\pi
+\end{array}
+```
+Solve for ``u(x,y)``.
+"""
+
 # ╔═╡ 9d0cb1cf-f817-4d41-bb9a-669ca01ad887
 begin
 	t, s = symbols("t, s", real=true)
@@ -4429,8 +4622,18 @@ version = "0.9.1+5"
 # ╟─4d4bf80f-a545-46b8-ba15-7e7146242378
 # ╟─5f690f76-373c-403a-ae3a-2ebd6ce1e69f
 # ╟─8b257fb2-3025-4834-983f-9fc36e4b7caa
-# ╠═d70ba1a6-9d03-4d37-a1fe-525a1bfc3941
-# ╠═9d0cb1cf-f817-4d41-bb9a-669ca01ad887
-# ╠═5867632c-fff5-11eb-3a19-2f309efd424a
+# ╟─d70ba1a6-9d03-4d37-a1fe-525a1bfc3941
+# ╟─7ee8033d-c469-49bf-85cc-08e725b8eeac
+# ╟─4c29e883-ed1a-4c3d-b2b5-c1ed7e894c79
+# ╟─1b5be907-04dc-4323-bc96-393e9bd98c3f
+# ╟─99946b5c-c729-4e82-b8ac-c4dbbd822b05
+# ╟─743a4bf7-8d3b-4411-8e7f-717e33820692
+# ╟─80f4b1a7-3664-486d-91fc-92a787e9a458
+# ╟─d4c1a7dc-327f-46d4-9848-c2c9cd6aaaa7
+# ╟─166393e7-4493-4cdb-94a4-ad3e99e06fab
+# ╟─30a6e2bd-e55d-423b-af84-37c80715d8c7
+# ╟─0d6f21f4-a348-4e5d-b49e-f41a4d521d0b
+# ╟─9d0cb1cf-f817-4d41-bb9a-669ca01ad887
+# ╟─5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
