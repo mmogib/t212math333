@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.1
+# v0.17.5
 
 using Markdown
 using InteractiveUtils
@@ -3463,9 +3463,9 @@ version = "0.21.0+0"
 
 [[Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE_jll", "Pkg", "Zlib_jll"]
-git-tree-sha1 = "74ef6288d071f58033d54fd6708d4bc23a8b8972"
+git-tree-sha1 = "a32d672ac2c967f3deb8a81d828afc739c838a06"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
-version = "2.68.3+1"
+version = "2.68.3+2"
 
 [[Graphics]]
 deps = ["Colors", "LinearAlgebra", "NaNMath"]
@@ -3768,7 +3768,7 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.36.0+0"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -3856,9 +3856,13 @@ version = "1.10.5"
 
 [[Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "7937eda4681660b4d6aeeecc2f7e1c81c8ee4e2f"
+git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
-version = "1.3.5+0"
+version = "1.3.5+1"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -4002,7 +4006,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[RangeArrays]]
@@ -4390,6 +4394,10 @@ git-tree-sha1 = "acc685bcf777b2202a904cdcb49ad34c2fa1880c"
 uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.14.0+4"
 
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+
 [[libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "7a5780a0d9c6864184b3a2eeeb833a0c871f00ab"
@@ -4634,6 +4642,6 @@ version = "0.9.1+5"
 # ╟─30a6e2bd-e55d-423b-af84-37c80715d8c7
 # ╟─0d6f21f4-a348-4e5d-b49e-f41a4d521d0b
 # ╟─9d0cb1cf-f817-4d41-bb9a-669ca01ad887
-# ╟─5867632c-fff5-11eb-3a19-2f309efd424a
+# ╠═5867632c-fff5-11eb-3a19-2f309efd424a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

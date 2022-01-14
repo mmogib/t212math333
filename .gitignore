@@ -48,3 +48,6 @@ docs/site/
 Manifest.toml
 
 private/
+
+# Local Netlify folder
+.netlify
