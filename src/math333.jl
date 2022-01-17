@@ -34,10 +34,30 @@ end
 TableOfContents(depth=4)
 
 # ╔═╡ 77f286eb-1757-4044-86dd-6a550affea75
-md"""
-# MATH333: Methods of Applied Mathematics 
-## [Syllabus](https://www.dropbox.com/s/zq5pn2yca17y0bu/Syllabus%20Math333-S211.pdf?dl=0)
-"""
+@htl("""
+<h1> MATH333: Methods of Applied Mathematics </h1>
+<h2><a href="https://www.dropbox.com/s/m2818amdimil4ls/Syllabus%20Math333-S212.pdf?raw=1" target="_blank" rel="noopener noreferrer">Syllabus</a></h2>
+
+""")
+
+# ╔═╡ fddabd8b-7777-45e9-88ca-79f2af408260
+@htl("""
+<div id="SAMPLEdivID"></div>
+<!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">
+Calendly.initBadgeWidget({ url: 'https://calendly.com/mshahrani/office-hour', text: 'Schedule Office hour', color: '#0069ff', textColor: '#ffffff', branding: false,
+parentElement: currentScript.previousElementSibling, position: "left",
+}); </script>
+<style type="text/css"> 
+.calendly-badge-widget { 
+right: auto !important; 
+left: 20px !important; 
+} 
+</style>
+<!-- Calendly badge widget end -->
+""")
 
 # ╔═╡ 79a8d881-0e07-44b1-a4cd-783b97db124e
 md"""
@@ -3480,9 +3500,9 @@ version = "1.0.2"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "Logging", "MbedTLS", "NetworkOptions", "Sockets", "URIs"]
-git-tree-sha1 = "44e3b40da000eab4ccb1aecdc4801c040026aeb5"
+git-tree-sha1 = "0fa77022fe4b511826b39c894c90daf5fce3334a"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "0.9.13"
+version = "0.9.17"
 
 [[HypertextLiteral]]
 git-tree-sha1 = "72053798e1be56026b81d4e2682dbe58922e5ec9"
@@ -4446,6 +4466,7 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─5928498a-cee5-4e32-a2c6-d46d3b9dcca4
 # ╟─77f286eb-1757-4044-86dd-6a550affea75
+# ╟─fddabd8b-7777-45e9-88ca-79f2af408260
 # ╟─79a8d881-0e07-44b1-a4cd-783b97db124e
 # ╟─b691771d-5ce5-4937-a249-cb01da6243ac
 # ╟─30c6cfaa-abca-4099-8bee-c6cc582ef3b2
