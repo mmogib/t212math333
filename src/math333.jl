@@ -40,6 +40,14 @@ TableOfContents(depth=4)
 
 """)
 
+# ╔═╡ c52f6c06-28f7-44f8-ba49-70b97e94b8ad
+begin 
+	qrCode = Resource("https://www.dropbox.com/s/jfwxp1hch65p91m/qr-code.png?raw=1",:width=> 400 )
+end
+
+# ╔═╡ cc9ecd98-d6a2-42a9-b555-6c33726cba54
+@htl("<a href='+966-13-860-7748'>Office Tel. (click me)</a>")
+
 # ╔═╡ fddabd8b-7777-45e9-88ca-79f2af408260
 @htl("""
 <div id="SAMPLEdivID"></div>
@@ -4466,6 +4474,8 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─5928498a-cee5-4e32-a2c6-d46d3b9dcca4
 # ╟─77f286eb-1757-4044-86dd-6a550affea75
+# ╟─c52f6c06-28f7-44f8-ba49-70b97e94b8ad
+# ╟─cc9ecd98-d6a2-42a9-b555-6c33726cba54
 # ╟─fddabd8b-7777-45e9-88ca-79f2af408260
 # ╟─79a8d881-0e07-44b1-a4cd-783b97db124e
 # ╟─b691771d-5ce5-4937-a249-cb01da6243ac
