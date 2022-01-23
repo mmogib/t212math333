@@ -45,9 +45,6 @@ begin
 	qrCode = Resource("https://www.dropbox.com/s/jfwxp1hch65p91m/qr-code.png?raw=1",:width=> 400 )
 end
 
-# ╔═╡ cc9ecd98-d6a2-42a9-b555-6c33726cba54
-@htl("<a href='+966-13-860-7748'>Office Tel. (click me)</a>")
-
 # ╔═╡ fddabd8b-7777-45e9-88ca-79f2af408260
 @htl("""
 <div id="SAMPLEdivID"></div>
@@ -337,6 +334,32 @@ T(x, y, z) = xyz(1 - x)(2 - y)(3 - z),\quad  0≤x≤1, 0 ≤ y ≤ 2, 0 ≤ z �
 If a *mosquito* is located at ``({1\over 2}, 1, 1)``, in which direction should it fly to cool off as rapidly as possible?
 
 """
+
+# ╔═╡ 94c3d252-4b81-4915-832b-64554e2c8352
+createSlackQuiz(section,pn,qn,text) = @htl("""
+<div>
+<div 
+style="display: flex; padding: 2px; justify-content: space-between; text-align: center; max-width: 250px;font-weight: bold; font-size: 1.2rem; color: #fefefe;" >
+<span style="color: #0505fe;"> $(section) </span> <span style="background-color: #fe0505; padding: 0 5px;">Problem $(pn) for Slack Quiz $(qn)<span></div>
+<div style="font-weight: 800; font-size: 1.1rem;">
+$(text)
+</div>
+
+</div>
+""")
+
+# ╔═╡ c1efb356-5b38-4acb-9900-0c700c44bf66
+begin
+slack_q1_p1 = createSlackQuiz("9.5",1,1,"Find the directional derivative of the given 
+function at the given point in the indicated direction.") 
+	md"""
+	$(slack_q1_p1)
+
+	```math
+	 f(x,y) = \tan^{-1}\frac{y}{x}\quad \text{at} \quad (2,-2)\quad \text{in the direction of} \quad 3\;\mathbf{i}-4\;\;\mathbf{j}.
+	```
+	"""
+end
 
 # ╔═╡ 0f489937-3266-4d83-880d-c4ec0ebd2d34
 md"## 9.7 Curl and Divergence"
@@ -4440,9 +4463,9 @@ version = "1.6.38+0"
 
 [[libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
-git-tree-sha1 = "c45f4e40e7aafe9d086379e5578947ec8b95a8fb"
+git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
 uuid = "f27f6e37-5d2b-51aa-960f-b287f2bc3b7a"
-version = "1.3.7+0"
+version = "1.3.7+1"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -4475,7 +4498,6 @@ version = "0.9.1+5"
 # ╟─5928498a-cee5-4e32-a2c6-d46d3b9dcca4
 # ╟─77f286eb-1757-4044-86dd-6a550affea75
 # ╟─c52f6c06-28f7-44f8-ba49-70b97e94b8ad
-# ╟─cc9ecd98-d6a2-42a9-b555-6c33726cba54
 # ╟─fddabd8b-7777-45e9-88ca-79f2af408260
 # ╟─79a8d881-0e07-44b1-a4cd-783b97db124e
 # ╟─b691771d-5ce5-4937-a249-cb01da6243ac
@@ -4489,6 +4511,8 @@ version = "0.9.1+5"
 # ╟─ca122aa2-cc1a-45c5-bf96-024eeca7b34e
 # ╟─9d1bddd0-45bb-4789-a388-46719159f497
 # ╟─fa1b0c79-0c40-4e88-ba65-e2565fc9b604
+# ╟─94c3d252-4b81-4915-832b-64554e2c8352
+# ╟─c1efb356-5b38-4acb-9900-0c700c44bf66
 # ╟─0f489937-3266-4d83-880d-c4ec0ebd2d34
 # ╟─392780ee-6c31-42fb-b311-a7e7df34b1dc
 # ╟─751bff35-70ab-4d5a-909c-692157146226
