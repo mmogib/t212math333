@@ -339,8 +339,11 @@ If a *mosquito* is located at ``({1\over 2}, 1, 1)``, in which direction should 
 createSlackQuiz(section,pn,qn,text) = @htl("""
 <div>
 <div 
-style="display: flex; padding: 2px; justify-content: space-between; text-align: center; max-width: 250px;font-weight: bold; font-size: 1.2rem; color: #fefefe;" >
-<span style="color: #0505fe;"> $(section) </span> <span style="background-color: #fe0505; padding: 0 5px;">Problem $(pn) for Slack Quiz $(qn)<span></div>
+style="display: flex; padding: 2px; justify-content: space-between; text-align: center; max-width: 250px;font-weight: bold; font-size: 1.2rem; color: #fefefe;
+" >
+<span style="color: #0505fe;"> $(section) </span> <span style="
+border-radius: 20px;
+background-color: #fe0505; padding: 0 5px;">Problem $(pn) for Slack Quiz $(qn)<span></div>
 <div style="font-weight: 800; font-size: 1.1rem;">
 $(text)
 </div>
@@ -510,8 +513,8 @@ If ``C`` is a smooth curve parameterized by ``x= f (t),y = g(t), a \leq t \leq b
 \int_C G(x,y)dx &=& \int_a^b G(f(t),g(t))f'(t) dt\\ \\
 	
 
-\int_C G(x,y)dx &=& \int_a^b G(f(t),g(t))g'(t) dt \\ \\
-\int_C G(x,y)dx &=& \int_a^b G(f(t),g(t))\sqrt{\left[f'(t)\right]^2+\left[g'(t)\right]^2} dt\\
+\int_C G(x,y)dy &=& \int_a^b G(f(t),g(t))g'(t) dt \\ \\
+\int_C G(x,y)ds &=& \int_a^b G(f(t),g(t))\sqrt{\left[f'(t)\right]^2+\left[g'(t)\right]^2} dt\\
 	\end{array}
 }
 ```
