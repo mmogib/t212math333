@@ -793,7 +793,7 @@ __Summary__
 
 ```math
 \mathbf{F} \text{ conservative} \Longleftrightarrow \text{ path independence} \Longleftrightarrow 
-\int_C \mathbf{F}\cdot d\mathbf{r}=0.
+\oint_C \mathbf{F}\cdot d\mathbf{r}=0.
 ```
 
 """
@@ -1857,9 +1857,9 @@ Solve
 ```math
 y'' + y = 4 \delta(t-2\pi) \quad \text {subject to}
 ```
-(a) ``y(0) = 1, y(0) = 0`` 
+(a) ``y(0) = 1, y'(0) = 0`` 
 
-(b) ``y(0) = 0, y(0) = 0``.
+(b) ``y(0) = 0, y'(0) = 0``.
 """
 
 # ╔═╡ 57c567a5-d43f-4a53-a142-e20e55218070
@@ -2003,10 +2003,10 @@ Computing, we get
 a_0 =\frac{1}{p}\int_{-p}^p f(x) dx
 ```
 ```math
-a_n =\frac{1}{p}\int_{-p}^p f(x)\cos\frac{n\pi}{p} dx, \quad n\geq 1
+a_n =\frac{1}{p}\int_{-p}^p f(x)\cos\frac{n\pi x}{p} dx, \quad n\geq 1
 ```
 ```math
-b_n =\frac{1}{p}\int_{-p}^p f(x)\sin\frac{n\pi}{p} dx, \quad n\geq 1
+b_n =\frac{1}{p}\int_{-p}^p f(x)\sin\frac{n\pi x}{p} dx, \quad n\geq 1
 ```
 
 __Definition__ (*Fourier Series*)
@@ -2014,15 +2014,15 @@ __Definition__ (*Fourier Series*)
 
 The __Fourier series__ of a function ``f`` defined on the interval ``(-p, p)`` is given by
 ```math
-f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n\cos\frac{n\pi}{p}
-+\sum_{n=1}^{\infty}b_n\sin\frac{n\pi}{p}
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n\cos\frac{n\pi x}{p}
++\sum_{n=1}^{\infty}b_n\sin\frac{n\pi x}{p}
 ```
 where
 ```math
 \begin{array}{lcl}
 a_0 &=&\frac{1}{p}\int_{-p}^p f(x) dx\\
-a_n &=&\frac{1}{p}\int_{-p}^p f(x)\cos\frac{n\pi}{p} dx, \quad n\geq 1\\
-b_n &=&\frac{1}{p}\int_{-p}^p f(x)\sin\frac{n\pi}{p} dx, \quad n\geq 1
+a_n &=&\frac{1}{p}\int_{-p}^p f(x)\cos\frac{n\pi x}{p} dx, \quad n\geq 1\\
+b_n &=&\frac{1}{p}\int_{-p}^p f(x)\sin\frac{n\pi x}{p} dx, \quad n\geq 1
 \end{array}
 ```
 """
@@ -2314,9 +2314,67 @@ can be written in __self-adjoint__ form provide that the coefficient functions a
 
 """
 
+# ╔═╡ 9ac241b2-beb4-46c7-a963-4914cfea06ed
+md"""
+__Example__ ( *parametric Bessel differential equation*)
+
+The general solution of the parametric Bessel differential equation 
+```math
+x^2y''+xy' + (\alpha^2x^2-n^2)y =0, \quad n=0,1,2,\cdots 
+```
+is
+```math
+y(x) = c_1J_n(\alpha x) + c_2Y_n(\alpha x), \quad n=0,1,2,\cdots
+```
+- ``r(0)=0``, 
+- ``J_n(\alpha x)`` is bounded
+- ``Y_n(\alpha x)`` is not bounded
+- the set ``\{J_n(\alpha_i x)\}, i=1,2,3,\cdots`` is orthogonal.
+- The orthogonality relation therefore is
+```math
+\int_a^b xJ_n(\alpha_i x)J_n(\alpha_j x) dx =0 , \quad \lambda_i\not = \lambda_j
+```
+- Provided that ``\alpha_i`` and therefore ``\lambda_i=\alpha_i^2`` are given by
+```math
+A_1J_n(\alpha_i b)+B_1\alpha_i J'_n(\alpha_i b) =0
+```
+- This last equation has an infinite solutions
+```math
+x_i = \alpha_i b, \quad \therefore \quad \lambda_i = \alpha_i^2 = (x_i/b)^2
+```
+"""
+
+# ╔═╡ ed39d869-fa1c-4d49-a5d0-a67e5a996045
+md"""
+__Example__: (*Legendre's Equation*)
+
+Legendre's Equation of order ``n``
+```math
+(1-x^2)y'' - 2xy' + n(n+1)y = 0
+```
+- here ``\lambda = n(n+1)``
+- Legendre's polynomials ``P_n(x)`` are the only solutions that are bounded on ``[-1,1]``.
+- Note that ``r(-1)=r(1)=0``
+- So ``\{P_n(x)\}, n=0,1,2,3,\cdots`` is orthogonal with relation
+```math
+\int_{-1}^1 P_n(x)P_m(x) dx  = 0, \quad m\not=n.
+```
+- These are the first six ``P_n``
+```math
+\begin{array}{rcl}
+P_0(x) & = & 1, \\
+P_1(x) & = & x, \\
+P_2(x) & = & \frac{1}{2}(3x^2-1), \\
+P_3(x) & = & \frac{1}{2}(5x^3-3x), \\
+P_4(x) & = & \frac{1}{8}(35x^4-30x^2+3), \\
+P_5(x) & = & \frac{1}{8}(63x^5-70x^3+15x), \\
+\end{array}
+```
+"""
+
 # ╔═╡ cdea9ddd-c827-4ed7-be92-20cf86796e1e
 md"""
-## 2.6 Bessel and Legendre Series
+## 12.6 Bessel and Legendre Series
 ### Bessel's equation of order ``\nu``
 ```math
 x^2y'' +xy' +(x^2-\nu^2)y = 0, \quad \nu\geq 0
@@ -2502,15 +2560,21 @@ that satisfy the boundary condition
 
 # ╔═╡ b2cbcf0e-d078-45ba-b3fc-a0b49b57825e
 begin
-	b(x) = besselj(0,x)
-	b(n,x) = besselj(n,x)
-	bd(n,x) = ForwardDiff.derivative(y->b(n,y),x)
-	bconds(x) = b(1,3*x) + x*bd(1,3*x)
-	αᵢ = Roots.find_zeros(bconds,0,50)[2:end]
-	cᵢ = [(18*α*b(2,3*α)/((9*α^2+8)*(b(1,3*α))^2)) for α in αᵢ]
-	Sₙ(n) = x -> sum([cᵢ[i]*b(1,αᵢ[i]*x) for i in 1:n])
-	plot(Sₙ(45),xlimits=(-10,10),frame_style=:origin)
+	bd(n,x) = ForwardDiff.derivative(y->besselj(n,y),x)
+	bconds(h,c,x) = h*besselj(1,x) + x*bd(1,x)
+	# αᵢ = Roots.find_zeros(bconds,0,50)[2:end]
+	# cᵢ = [(18*α*b(2,3*α)/((9*α^2+8)*(b(1,3*α))^2)) for α in αᵢ]
+	# Sₙ(n) = x -> sum([cᵢ[i]*b(1,αᵢ[i]*x) for i in 1:n])
+	# plot(Sₙ(45),xlimits=(-10,10),frame_style=:origin)
 	
+end
+
+# ╔═╡ c41bc4ef-f198-4627-8200-e66ecced5c0a
+begin
+	b = 3
+	bconds2(x) = 3*besselj(1,x) + x*bd(1,x)
+	xᵢ = Roots.find_zeros(bconds2,0,50)[2:6]	
+	αᵢ = xᵢ/b
 end
 
 # ╔═╡ dc185f92-9333-46e2-9eb5-0879d13b9124
@@ -2563,6 +2627,22 @@ f(x) = \left\{
 \end{array}
 \right.
 ```
+"""
+
+# ╔═╡ 74e92975-6f12-4ad5-99f9-8c26cf6a32ce
+md"""
+__Alternative Form of Series__
+
+Let ``x=\cos\theta``, then ``x=-1\Rightarrow \theta=\pi`` and  ``x=1\Rightarrow \theta=0``. Further ``dx=-\sin\theta d\theta``. So The Fourier-Legendre series becomes
+
+```math
+f(x) = \sum_{n=0}^{\infty}c_nP_n(\cos\theta),
+```
+where 
+```math
+c_n =\frac{ 2n+1}{2}\int_{0}^{\pi} f(x)P_n(\cos\theta) \sin\theta d\theta. 
+```
+
 """
 
 # ╔═╡ 75912a1a-e7dc-43f9-ab1f-026308d97ff7
@@ -3133,6 +3213,33 @@ begin
 	Lp(f) = integrate(exp(-s*t)*f,(t,0,oo))
 	Lp(sin(t))
 	html""
+end
+
+# ╔═╡ 9d55ec52-b23c-48c5-9cd3-42d6100c4dd7
+begin
+	a=0	
+	f(t) = sin(2t)
+	
+	L(f) = integrate(exp(-x*s)*f(x),(x,0,oo))
+	F(x)= subs(L(f),s,x)
+	srang = (a+0.1):0.1:10
+	LapPlt = plot([(srang,f.(srang)),(srang,F.(srang))], 
+			layout=2, 
+			framestyle=:origin,
+			asptectratio=1,
+			c=[:red :green],
+			title = [L"f(t)" L"F(s)=(L(f))"]
+			
+		)
+	fxTxt = f(x)
+	annotate!(
+		[(2.5,f(10)/2,L"f(t)=%$(f(t))")],
+		subplot=1
+	)
+	annotate!(
+		[(7.2,Float64(F(0.2).n()),L"F(s)")],
+		subplot=2
+	)
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -3727,6 +3834,12 @@ git-tree-sha1 = "f6250b16881adf048549549fba48b1161acdac8c"
 uuid = "c1c5ebd0-6772-5130-a774-d5fcae4a789d"
 version = "3.100.1+0"
 
+[[LERC_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "bf36f528eec6634efc60d7ec062008f171071434"
+uuid = "88015f11-f218-50d7-93a8-a6af411a945d"
+version = "3.0.0+1"
+
 [[LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "e5b909bcf985c5e2605737d2ce278ed791b89be6"
@@ -3810,10 +3923,10 @@ uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
 version = "2.35.0+0"
 
 [[Libtiff_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
-git-tree-sha1 = "340e257aada13f95f98ee352d316c3bed37c8ab9"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
+git-tree-sha1 = "c9551dd26e31ab17b86cbd00c2ede019c08758eb"
 uuid = "89763e89-9b03-5906-acba-b20f662cd828"
-version = "4.3.0+0"
+version = "4.3.0+1"
 
 [[Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -4591,6 +4704,7 @@ version = "0.9.1+5"
 # ╟─59058a3f-6571-4090-90bf-b2cbac2dc709
 # ╟─0cf4ab34-6479-43ba-aed4-c300ad7cf8a4
 # ╟─7fb106db-664f-4139-9d29-96cd855a0605
+# ╠═9d55ec52-b23c-48c5-9cd3-42d6100c4dd7
 # ╟─bfdd5cc2-8da9-4530-b44a-b2b45ffa119b
 # ╟─776b5a94-b578-4fbd-8645-c5af41371b0a
 # ╟─e39cb5f0-7110-4e98-af12-ed35a7b80f81
@@ -4656,6 +4770,8 @@ version = "0.9.1+5"
 # ╟─d639a318-4b5d-4d34-8a17-c8523434b5ee
 # ╟─108a1fc2-f887-474b-8b23-2479a0e4c86f
 # ╟─21de6619-cc54-4f64-83e2-56d3c97b5f16
+# ╟─9ac241b2-beb4-46c7-a963-4914cfea06ed
+# ╟─ed39d869-fa1c-4d49-a5d0-a67e5a996045
 # ╟─cdea9ddd-c827-4ed7-be92-20cf86796e1e
 # ╟─bc58ab1e-55cc-40e5-89b6-79601f74e569
 # ╟─b5505ca5-c491-4d50-8f70-d10d400fecf0
@@ -4665,9 +4781,11 @@ version = "0.9.1+5"
 # ╟─eb0a78f2-4e38-4b50-ae40-723cc16ffea9
 # ╟─dc539496-b56e-4366-bc4e-6e39740b44ba
 # ╠═b2cbcf0e-d078-45ba-b3fc-a0b49b57825e
+# ╠═c41bc4ef-f198-4627-8200-e66ecced5c0a
 # ╟─dc185f92-9333-46e2-9eb5-0879d13b9124
 # ╟─7925e2bf-59e4-4c53-8349-b4022338138b
 # ╟─45fa6519-6dac-4e6c-a22d-20eb1d8aee97
+# ╟─74e92975-6f12-4ad5-99f9-8c26cf6a32ce
 # ╟─75912a1a-e7dc-43f9-ab1f-026308d97ff7
 # ╟─18af244e-47cf-44fd-a6ac-186ddb5a2d9e
 # ╟─f2aa1e09-c3e4-40f7-99e6-2b978e1cdbf8
